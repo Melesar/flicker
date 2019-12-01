@@ -9,4 +9,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules")
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
+include_directories()
+
 add_subdirectory(Flicker)
