@@ -1,4 +1,4 @@
-add_executable(Flicker main.cpp)
+add_executable(Flicker main.cpp glad.c)
 
 target_include_directories(Flicker PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
