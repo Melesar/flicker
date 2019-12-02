@@ -19,3 +19,5 @@ add_custom_command(TARGET Flicker POST_BUILD
 add_custom_command(TARGET Flicker POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/resources ${RESOURCES_OUTPUT_PATH})
+
+add_subdirectory(Application)
