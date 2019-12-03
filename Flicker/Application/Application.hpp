@@ -1,10 +1,12 @@
 #pragma once 
 #include <memory>
+#include <GLFW/glfw3.h>
 
-class GLFWwindow;
 
 namespace Flicker
 {
+    class Renderer;
+
     class Application
     {
     public:
@@ -19,7 +21,7 @@ namespace Flicker
         bool m_ShouldClose {false};
 
         GLFWwindow* m_Window;
-        // std::unique_ptr<Renderer> m_Renderer;
+        std::unique_ptr<Renderer> m_Renderer;
         // std::unique_ptr<Input> m_Input;
         // std::unique_ptr<Camera> m_Camera;
     };

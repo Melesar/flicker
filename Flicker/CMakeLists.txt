@@ -1,6 +1,7 @@
 add_executable(Flicker main.cpp glad.c)
 
 target_include_directories(Flicker PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(Flicker PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_library(LIB_ASSIMP NAMES assimp PATHS ${LIB_DIR})
 find_library(LIB_GLFW NAMES glfw3 glfw3dll PATHS ${LIB_DIR})
@@ -21,3 +22,4 @@ add_custom_command(TARGET Flicker POST_BUILD
         ${CMAKE_SOURCE_DIR}/resources ${RESOURCES_OUTPUT_PATH})
 
 add_subdirectory(Application)
+add_subdirectory(Renderer)
