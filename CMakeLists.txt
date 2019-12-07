@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(Flicker)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 set(BINARIES_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(VENDOR_DIR ${PROJECT_SOURCE_DIR}/vendor)

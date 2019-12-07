@@ -33,6 +33,7 @@ Flicker::Application::Application()
     }
 
     m_Renderer = std::make_unique<ForwardRenderer>(m_Window);
+    
 }
 
 Flicker::Application::~Application()

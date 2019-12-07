@@ -14,6 +14,7 @@ namespace Flicker
         static void get();
 
         static std::shared_ptr<Shader> loadShader(std::string name); 
+        static std::string getFileContents(std::string fileName);
 
     private:
         Assets();
