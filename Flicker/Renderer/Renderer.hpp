@@ -1,8 +1,12 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <memory>
 
 namespace Flicker
 {
+    class Shader;
+    class Model;
+
     class Renderer
     {
     public: 
@@ -16,8 +20,13 @@ namespace Flicker
         
         virtual void renderScene() = 0;
 
+        
+
     protected:
 
         int m_Width, m_Height;
+
+        std::shared_ptr<Shader> m_Shader;
+        std::shared_ptr<Model> m_Model;
     };
 }

@@ -3,10 +3,15 @@
 
 Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window) 
 {
-    Flicker::Assets::loadShader("lit");
+
+}
+
+void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Flicker::Shader* shader)
+{
+    
 }
 
 void Flicker::ForwardRenderer::renderScene()
 {
-
+    renderModel(m_Model.get(), m_Shader.get());
 }

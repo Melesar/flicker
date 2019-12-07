@@ -13,5 +13,9 @@ namespace Flicker
     protected:
 
         void renderScene() override;
+
+    private:
+    
+        void renderModel(Model* model, Shader* shader);
     };
 }

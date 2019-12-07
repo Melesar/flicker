@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <cassert>
 #include "Renderer.hpp"
+#include "Assets/Assets.hpp"
 
 void Flicker::Renderer::render()
 {
@@ -27,6 +28,10 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     glfwGetWindowSize(window, &m_Width, &m_Height);
 
     glViewport(0, 0, m_Width, m_Height);
+
+    m_Model = Flicker::Assets::loadModel("teapot.fbx");
+
+    m_Shader = Flicker::Assets::loadShader("lit");
 
     // glfwSetFramebufferSizeCallback(window, &onWindowResize);
 }
