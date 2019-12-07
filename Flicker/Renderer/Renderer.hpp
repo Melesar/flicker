@@ -12,10 +12,9 @@ namespace Flicker
 
     protected:
 
-
+        void onWindowResize(GLFWwindow* window, int width, int height);
+        
         virtual void renderScene() = 0;
-
-        virtual void onWindowResize(GLFWwindow* window, int width, int height);
 
     protected:
 

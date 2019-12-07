@@ -10,6 +10,14 @@ void Flicker::Renderer::render()
     renderScene();
 }
 
+void Flicker::Renderer::onWindowResize(GLFWwindow* window, int width, int height)
+{
+    m_Width = width;
+    m_Height = height;
+    
+    glViewport(0, 0, m_Width, m_Height);
+}
+
 Flicker::Renderer::Renderer(GLFWwindow* window)
 {
     glfwMakeContextCurrent(window);
@@ -20,13 +28,6 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
 
     glViewport(0, 0, m_Width, m_Height);
 
-    //glfwSetFramebufferSizeCallback(window, onWindowResize);
+    // glfwSetFramebufferSizeCallback(window, &onWindowResize);
 }
 
-void Flicker::Renderer::onWindowResize(GLFWwindow* window, int width, int height)
-{
-    m_Width = width;
-    m_Height = height;
-    
-    glViewport(0, 0, m_Width, m_Height);
-}
