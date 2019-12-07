@@ -15,9 +15,7 @@ std::shared_ptr<Flicker::Shader> Flicker::Assets::loadShader(std::string name)
     }
 
     std::stringstream ss;
-    ss << ASSETS_PATH << '/' << name;
-
-    std::cout << "Shader path: " << ss.str() << std::endl;
+    ss << ASSETS_PATH << "/shaders/" << name;
 
     std::string vertexShaderSource = getFileContents(ss.str() + ".vs");
     std::string fragmentShaderSource = getFileContents(ss.str() + ".fs");
@@ -31,7 +29,7 @@ std::shared_ptr<Flicker::Shader> Flicker::Assets::loadShader(std::string name)
 
 std::string Flicker::Assets::getFileContents(std::string filePath)
 {
-    std::ifstream ifs("myfile.txt");
+    std::ifstream ifs(filePath);
     std::string content( (std::istreambuf_iterator<char>(ifs) ),
                        (std::istreambuf_iterator<char>()    ) );
 
