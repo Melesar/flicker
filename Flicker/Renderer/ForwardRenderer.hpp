@@ -16,6 +16,6 @@ namespace Flicker
 
     private:
     
-        void renderModel(Model* model, Shader* shader, Camera* camera);
+        void renderModel(Model* model, Camera* camera);
     };
 }

@@ -161,6 +161,26 @@ void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
     }
 
+    aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
+    int diffuseTexCount = mat->GetTextureCount(aiTextureType_DIFFUSE);
+    int speculareTexCount = mat->GetTextureCount(aiTextureType_SPECULAR);
+
+    std::cout << "Diffuse textures " << diffuseTexCount << " specular textures " << speculareTexCount << std::endl;
+    for (size_t i = 0; i < diffuseTexCount; i++)
+    {
+        aiString path;
+        mat->GetTexture(aiTextureType_DIFFUSE, i, &path);
+        std::cout << "Diffuse texture " << path.C_Str() << std::endl;
+    }
+
+    for (size_t i = 0; i < speculareTexCount; i++)
+    {
+        aiString path;
+        mat->GetTexture(aiTextureType_SPECULAR, i, &path);
+        std::cout << "Specular texture " << path.C_Str() << std::endl;
+    }
+    
+
     m_Meshes.emplace_back(verts, indices);
     m_Materials.emplace_back(std::make_unique<LitMaterial>());
 

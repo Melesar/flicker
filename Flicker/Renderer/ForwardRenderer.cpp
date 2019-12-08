@@ -8,7 +8,7 @@ Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window)
 {
 }
 
-void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Flicker::Shader* shader, Camera* camera)
+void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Camera* camera)
 {
     glm::mat4x4 viewProjMatrix = camera->worldToClipMatrix();
 
@@ -20,5 +20,5 @@ void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Flicker::Shade
 
 void Flicker::ForwardRenderer::renderScene(Camera* camera)
 {
-    renderModel(m_Model.get(), m_Shader.get(), camera);
+    renderModel(m_Model.get(), camera);
 }
