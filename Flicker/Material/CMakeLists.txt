@@ -1,0 +1,1 @@
+target_sources(Flicker PUBLIC Material.hpp Material.cpp LitMaterial.hpp LitMaterial.cpp)

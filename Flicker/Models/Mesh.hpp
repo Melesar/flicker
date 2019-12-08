@@ -18,6 +18,8 @@ namespace Flicker
         Mesh(const std::vector<Vertex> vertices, const std::vector<int> indices);
         virtual ~Mesh();
 
+        int trisCount() const;
+
         void setVertices (const std::vector<Vertex> verts);
         void setIndices (const std::vector<int> indices);
 

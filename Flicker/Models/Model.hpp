@@ -6,6 +6,7 @@ struct aiScene;
 namespace Flicker
 {
     class Mesh;
+    class Material;
 
     class Model
     {
@@ -14,10 +15,21 @@ namespace Flicker
         virtual ~Model();
 
         void bind() const;
+        void draw();
+
+        Material* getMaterial(int index);
 
         size_t indexCount() const;
         size_t meshesCount() const;
         const Mesh& getMesh(size_t index) const;
+
+    public:
+
+        template<typename T>
+        T* getMaterial(int index)
+        {
+            return dynamic_cast<T*>(m_Materials[index].get());
+        }
 
     private:
 
@@ -34,6 +46,7 @@ namespace Flicker
     private:
 
         std::vector<Mesh> m_Meshes;
+        std::vector<std::unique_ptr<Material>> m_Materials;
 
         size_t m_IndexCount {0};
 

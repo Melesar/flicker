@@ -16,6 +16,11 @@ Flicker::Mesh::~Mesh()
 
 }
 
+int Flicker::Mesh::trisCount() const
+{
+    return m_Indices.size();
+}
+
 void Flicker::Mesh::setVertices (const std::vector<Flicker::Vertex> verts)
 {
     m_Vertices = verts;

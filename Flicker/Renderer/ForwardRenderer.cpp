@@ -10,21 +10,12 @@ Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window)
 
 void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Flicker::Shader* shader, Camera* camera)
 {
-    GLint colorId = shader->getUniformId("color");
-    GLint transformId = shader->getUniformId("transform");
-
-    shader->use();
-    shader->setVector4(colorId, {1, 0.534, 0.874, 1});
-
-    Flicker::Transform& modelTransform = model->transform;
-    modelTransform.position = {0, -1, -3};
-    glm::mat4x4 modelMatrix = modelTransform.localToWorldMatrix();
     glm::mat4x4 viewProjMatrix = camera->worldToClipMatrix();
 
-    shader->setMatrix(transformId, viewProjMatrix * modelMatrix);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_MatricesUBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4x4), glm::value_ptr(viewProjMatrix));
 
-    model->bind();
-    glDrawElements(GL_TRIANGLES, model->indexCount(), GL_UNSIGNED_INT, 0);
+    m_Model->draw();
 }
 
 void Flicker::ForwardRenderer::renderScene(Camera* camera)

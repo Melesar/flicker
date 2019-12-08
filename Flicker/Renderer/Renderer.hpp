@@ -20,11 +20,16 @@ namespace Flicker
         
         virtual void renderScene(Camera* camera) = 0;
 
+    private:
+
+        void setupUniformBuffers();
+
     protected:
 
         int m_Width, m_Height;
 
-        std::shared_ptr<Shader> m_Shader;
+        GLuint m_MatricesUBO;
+
         std::shared_ptr<Model> m_Model;
     };
 }

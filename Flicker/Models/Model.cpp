@@ -1,5 +1,6 @@
 #include "Model.hpp"
 #include "Mesh.hpp"
+#include "Material/LitMaterial.hpp"
 
 glm::vec3 vec3 (aiVector3D vec)
 {
@@ -26,6 +27,35 @@ void Flicker::Model::bind() const
 {
     glBindVertexArray(m_VAO);
 }
+
+void Flicker::Model::draw()
+{
+    glBindVertexArray(m_VAO);
+
+    for(int i = 0; i < meshesCount(); ++i)
+    {
+        std::unique_ptr<Material>& mat = m_Materials[i];
+        Mesh& mesh = m_Meshes[i];
+
+        mat->setModelMatrix(transform.localToWorldMatrix());
+
+        //TODO respect child-parent relations
+        // mat->setModelMatrix(mesh.transform.localToWorldMatrix());
+
+        mat->use();
+
+        glDrawElements(GL_TRIANGLES, mesh.trisCount(), GL_UNSIGNED_INT, 0);
+    }
+
+    glBindVertexArray(0);
+}
+
+Flicker::Material* Flicker::Model::getMaterial (int index)
+{
+    assert(index < meshesCount());
+
+    return m_Materials[index].get();
+} 
 
 size_t Flicker::Model::meshesCount() const
 {
@@ -132,5 +162,7 @@ void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
     }
 
     m_Meshes.emplace_back(verts, indices);
+    m_Materials.emplace_back(std::make_unique<LitMaterial>());
+
     m_IndexCount += indices.size();
 }
