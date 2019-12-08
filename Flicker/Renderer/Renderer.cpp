@@ -1,8 +1,5 @@
-#include <glad/glad.h>
-#include <cassert>
 #include "Renderer.hpp"
 #include "Assets/Assets.hpp"
-#include <iostream>
 
 void Flicker::Renderer::render()
 {

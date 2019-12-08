@@ -2,9 +2,7 @@
 #include "Models/Model.hpp"
 #include "ForwardRenderer.hpp"
 #include "Assets/Assets.hpp"
-// #include "Shader/Shader.hpp"
-#include <glm/gtx/transform.hpp>
-#include <iostream>
+#include "Shader/Shader.hpp"
 
 Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window) 
 {

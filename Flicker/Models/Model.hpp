@@ -1,8 +1,4 @@
 #pragma once
-#include <memory>
-#include <vector>
-// #include <GLAD/glad.h>
-#include "Shader/Shader.hpp"
 
 struct aiScene;
 

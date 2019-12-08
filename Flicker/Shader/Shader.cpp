@@ -1,7 +1,4 @@
 #include "Shader.hpp"
-#include <cassert>
-#include <iostream>
-#include <glm/gtc/type_ptr.hpp>
 
 void Flicker::Shader::use()
 {

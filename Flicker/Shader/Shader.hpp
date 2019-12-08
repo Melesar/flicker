@@ -1,7 +1,4 @@
 #pragma once 
-#include <string>
-#include <GLAD/glad.h>
-#include <glm/glm.hpp>
 
 namespace Flicker
 {
