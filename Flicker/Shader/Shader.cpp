@@ -1,6 +1,42 @@
 #include "Shader.hpp"
 #include <cassert>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
+
+void Flicker::Shader::use()
+{
+    glUseProgram(m_Program);
+}
+
+GLuint Flicker::Shader::getID() const
+{
+    return m_Program;
+}
+
+void Flicker::Shader::setInt(GLint id, int value)
+{
+    glUniform1i(id, value);
+}
+
+void Flicker::Shader::setFloat(GLint id, float value)
+{
+    glUniform1f(id, value);
+}
+
+void Flicker::Shader::setVector4(GLint id, glm::vec4 vec)
+{
+    glUniform4fv(id, 1, glm::value_ptr(vec));
+}
+
+void Flicker::Shader::setMatrix(GLint id, glm::mat4x4 mat)
+{
+    glUniformMatrix4fv(id, 1, false, glm::value_ptr(mat));
+}
+
+GLint Flicker::Shader::getUniformId(char* name) const
+{
+    return glGetUniformLocation(m_Program, name);    
+}
 
 Flicker::Shader::Shader(const std::string& vertexShaderSource, const std::string& fragmentShaderSource)
 {

@@ -1,10 +1,10 @@
 #include "Assets.hpp"
 #include "Shader/Shader.hpp"
-#include "Models/Model.hpp"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "Models/Model.hpp"
 
 #include <fstream>
 #include <sstream>

@@ -1,7 +1,7 @@
 #pragma once 
 #include <string>
 #include <GLAD/glad.h>
-
+#include <glm/glm.hpp>
 
 namespace Flicker
 {
@@ -15,11 +15,13 @@ namespace Flicker
 
         GLuint getID() const;
 
-        void setInt(char* name, int value);
-        void setFloat(char* name, float value);
-        // void setTexture(char* name, Texture* value);
+        void setInt(GLint id, int value);
+        void setFloat(GLint id, float value);
+        void setVector4(GLint id, glm::vec4 vec);
+        void setMatrix(GLint id, glm::mat4x4 mat);
+        // void setTexture(GLint id, Texture* value);
 
-        GLint getUniformId(char* name);
+        GLint getUniformId(char* name) const;
 
     private:
 
