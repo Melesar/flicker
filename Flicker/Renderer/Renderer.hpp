@@ -4,11 +4,13 @@ namespace Flicker
 {
     class Shader;
     class Model;
+    class Camera;
 
     class Renderer
     {
     public: 
-        void render();
+        void render(Camera* camera);
+
         Renderer(GLFWwindow* window);
         virtual ~Renderer() = default;
 
@@ -16,9 +18,7 @@ namespace Flicker
 
         void onWindowResize(GLFWwindow* window, int width, int height);
         
-        virtual void renderScene() = 0;
-
-        
+        virtual void renderScene(Camera* camera) = 0;
 
     protected:
 

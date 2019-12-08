@@ -1,12 +1,13 @@
 #include "Renderer.hpp"
 #include "Assets/Assets.hpp"
+#include "Transform/Camera.hpp"
 
-void Flicker::Renderer::render()
+void Flicker::Renderer::render(Camera* camera)
 {
     glClearColor(0.14f, 0.43f, 0.85f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    renderScene();
+    renderScene(camera);
 }
 
 void Flicker::Renderer::onWindowResize(GLFWwindow* window, int width, int height)

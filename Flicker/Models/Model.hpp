@@ -1,4 +1,5 @@
 #pragma once
+#include "Transform/Transform.hpp"
 
 struct aiScene;
 
@@ -25,6 +26,10 @@ namespace Flicker
 
         void createBuffers();
         void createBuffers(size_t meshIndex);
+
+    public:
+
+        Transform transform;
 
     private:
 

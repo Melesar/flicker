@@ -1,1 +1,1 @@
-target_sources(Flicker PRIVATE Mesh.hpp Mesh.cpp Model.hpp Model.cpp)
+target_sources(Flicker PUBLIC Mesh.hpp Mesh.cpp Model.hpp Model.cpp)

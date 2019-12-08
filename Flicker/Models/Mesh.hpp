@@ -1,4 +1,5 @@
 #pragma once 
+#include "Transform/Transform.hpp"
 
 namespace Flicker
 {
@@ -22,6 +23,10 @@ namespace Flicker
 
         const std::vector<Vertex>& getVertices() const;
         const std::vector<int>& getIndices() const;
+
+   public:
+
+        Transform transform;
 
     private:
 

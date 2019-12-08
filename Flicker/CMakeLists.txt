@@ -31,5 +31,6 @@ add_subdirectory(Renderer)
 add_subdirectory(Shader)
 add_subdirectory(Assets)
 add_subdirectory(Models)
+add_subdirectory(Transform)
 
 cotire(Flicker)

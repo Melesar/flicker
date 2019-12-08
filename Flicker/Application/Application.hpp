@@ -3,6 +3,7 @@
 namespace Flicker
 {
     class Renderer;
+    class Camera;
 
     class Application
     {
@@ -20,6 +21,6 @@ namespace Flicker
         GLFWwindow* m_Window;
         std::unique_ptr<Renderer> m_Renderer;
         // std::unique_ptr<Input> m_Input;
-        // std::unique_ptr<Camera> m_Camera;
+        std::unique_ptr<Camera> m_Camera;
     };
 }

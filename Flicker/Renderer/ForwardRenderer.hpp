@@ -12,10 +12,10 @@ namespace Flicker
 
     protected:
 
-        void renderScene() override;
+        void renderScene(Camera* camera) override;
 
     private:
     
-        void renderModel(Model* model, Shader* shader);
+        void renderModel(Model* model, Shader* shader, Camera* camera);
     };
 }

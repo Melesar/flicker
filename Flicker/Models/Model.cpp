@@ -1,7 +1,5 @@
-#include <assimp/scene.h>
 #include "Model.hpp"
 #include "Mesh.hpp"
-#include <iostream>
 
 glm::vec3 vec3 (aiVector3D vec)
 {
