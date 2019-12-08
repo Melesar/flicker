@@ -8,7 +8,7 @@ namespace Flicker
     public:
         float fov {60};
         float zNear {0.1f}, zFar {100.f};
-        //Transform transform;
+        Transform transform;
 
     public:
 

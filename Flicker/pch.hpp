@@ -16,4 +16,10 @@
 #include <memory>
 #include <cassert>
 #include <vector>
+#include <array>
 #include <string>
+
+const int NUM_POINT_LIGHTS = 4;
+const float POINT_LIGHT_CONSTANT_ATTENUATION = 1.0f;
+const float POINT_LIGHT_LINEAR_ATTENUATION = 0.14f;
+const float POINT_LIGHT_QUADRATIC_ATTENUATION = 0.07f;

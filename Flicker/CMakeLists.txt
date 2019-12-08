@@ -33,5 +33,6 @@ add_subdirectory(Assets)
 add_subdirectory(Models)
 add_subdirectory(Transform)
 add_subdirectory(Material)
+add_subdirectory(Light)
 
 cotire(Flicker)

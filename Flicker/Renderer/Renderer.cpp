@@ -4,6 +4,8 @@
 #include "Models/Model.hpp"
 #include "Material/LitMaterial.hpp"
 #include "Transform/Transform.hpp"
+// #include "Light/PointLight.hpp"
+#include "Light/LightUniformData.hpp"
 
 void Flicker::Renderer::render(Camera* camera)
 {
@@ -23,11 +25,22 @@ void Flicker::Renderer::onWindowResize(GLFWwindow* window, int width, int height
 
 void Flicker::Renderer::setupUniformBuffers()
 {
-    glGenBuffers(1, &m_MatricesUBO);
-    glBindBuffer(GL_UNIFORM_BUFFER, m_MatricesUBO);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4), nullptr, GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_MatricesUBO);
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    glGenBuffers(1, &m_CameraUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4) + sizeof(glm::vec3), nullptr, GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_CameraUBO);
+
+    Flicker::LightUniformData lightData;
+    for(int i = 0; i < m_Lights.size(); i++)
+    {
+        PointLightUniformData& data = lightData.pointLights[i];
+        
+        data = PointLightUniformData(m_Lights[i]);
+    }
+
+    glGenBuffers(1, &m_LightsUBO);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_LightsUBO);
+    glBufferData(GL_UNIFORM_BUFFER, sizeof(LightUniformData), &lightData, GL_STATIC_DRAW);glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightsUBO);
 }
 
 Flicker::Renderer::Renderer(GLFWwindow* window)
@@ -39,6 +52,11 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     glfwGetWindowSize(window, &m_Width, &m_Height);
 
     glViewport(0, 0, m_Width, m_Height);
+
+    m_Lights.emplace_back();
+    Flicker::PointLight& light = m_Lights[0];
+    Flicker::Transform& lightTransform = light.transform;
+    lightTransform.position = {-1, 2, -3};
 
     setupUniformBuffers();
 

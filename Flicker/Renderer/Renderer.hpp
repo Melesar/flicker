@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Light/PointLight.hpp"
+
 namespace Flicker
 {
     class Shader;
     class Model;
     class Camera;
+
 
     class Renderer
     {
@@ -28,8 +31,9 @@ namespace Flicker
 
         int m_Width, m_Height;
 
-        GLuint m_MatricesUBO;
+        GLuint m_CameraUBO, m_LightsUBO;
 
+        std::vector<PointLight> m_Lights;
         std::shared_ptr<Model> m_Model;
     };
 }

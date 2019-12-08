@@ -11,6 +11,7 @@ glm::mat4x4 Flicker::Camera::worldToClipMatrix() const
 Flicker::Camera::Camera(GLFWwindow* window)
 {
     glfwGetWindowSize(window, &m_Width, &m_Height);
+    transform = Flicker::Transform();
 }
 
 Flicker::Camera::~Camera()
