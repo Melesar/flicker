@@ -101,8 +101,6 @@ void Flicker::Model::processNode(aiNode* node, const aiScene* scene)
     }
 }
 
-
-
 void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
     std::vector<Flicker::Vertex> verts;
@@ -112,7 +110,6 @@ void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
     {
         aiVector3D position = mesh->mVertices[i];
         aiVector3D normal = mesh->mNormals[i];
-        
 
         Vertex v;
         v.position = vec3(position);

@@ -17,7 +17,7 @@ file(COPY ${LIB_DIR}/glfw3.dll DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 set(ASSETS_PATH  ${CMAKE_SOURCE_DIR}/assets)
 set(ASSETS_OUTPUT_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets)
 
-add_definitions(-DASSETS_PATH="${ASSETS_PATH}")
+add_definitions(-DASSETS_PATH="assets")
 
 add_custom_command(TARGET Flicker POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E make_directory
