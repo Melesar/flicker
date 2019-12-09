@@ -40,7 +40,7 @@ vec3 calcPointLight(PointLight light, vec3 norm, vec3 viewDir)
     int shininess = 32;
     vec3 lightDir = normalize(light.position - FragPos);
     float diff = max(dot(lightDir, norm), 0.0);
-    vec3 reflectDir = reflect(lightDir, norm);
+    vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(reflectDir, viewDir), 0.0), shininess);
 
     vec3 lAmbient = light.ambient * vec3(color);
@@ -50,30 +50,19 @@ vec3 calcPointLight(PointLight light, vec3 norm, vec3 viewDir)
     float distance = length(light.position - FragPos);
     float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadrant * distance * distance);
 
-    return /*attenuation **/ vec3(lAmbient + lDiffuse + lSpecular);
+    return attenuation * (lAmbient + lDiffuse + lSpecular);
 }
 
 void main()
 {
-    vec3 ligtPos = vec3(-1, 2, -3);
-
-    int shininess = 32;
-    
     vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(ligtPos - FragPos);
-    float diff = max(dot(norm, lightDir), 0.0);
-
     vec3 viewDir = normalize(cameraPos - FragPos);
-    vec3 reflectDir = reflect(lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
 
     vec3 resultColor = vec3(0);
-    for(int i = 0; i < NUM_POINT_LIGHTS; i++)
+    for(int i = 0; i < 1; i++)
     {
         resultColor += calcPointLight(pointLights[i], norm, viewDir);
     }
 
     FragColor = vec4(resultColor, 1);
-    // FragColor = (diff + spec) * color;
-    // FragColor = texture(diffuse, texCoord0) * color;
 } 

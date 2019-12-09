@@ -12,11 +12,11 @@ namespace Flicker
 
     struct PointLightUniformData
     {
-        glm::vec3 position {0, 0, 0};
+        glm::vec4 position {0, 0, 0, 0};
 
-        glm::vec3 ambient {0, 0, 0};
-        glm::vec3 diffuse {0, 0, 0};
-        glm::vec3 specular {0, 0, 0};
+        glm::vec4 ambient {0, 0, 0, 0};
+        glm::vec4 diffuse {0, 0, 0, 0};
+        glm::vec4 specular {0, 0, 0, 0};
 
         float constant {0};
         float linear {0};
@@ -29,11 +29,11 @@ namespace Flicker
 
         PointLightUniformData(const PointLight& light)
         {
-            position = light.transform.position;
+            position = glm::vec4(light.transform.position, 0.f);
 
-            ambient = light.ambient;
-            diffuse = light.diffuse;
-            specular = light.specular;
+            ambient = glm::vec4(light.ambient, 0.f);
+            diffuse = glm::vec4(light.diffuse, 0.f);
+            specular = glm::vec4(light.specular, 0.f);
 
             constant = light.constant;
             linear = light.linear;

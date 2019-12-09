@@ -40,7 +40,27 @@ void Flicker::Renderer::setupUniformBuffers()
 
     glGenBuffers(1, &m_LightsUBO);
     glBindBuffer(GL_UNIFORM_BUFFER, m_LightsUBO);
-    glBufferData(GL_UNIFORM_BUFFER, sizeof(LightUniformData), &lightData, GL_STATIC_DRAW);glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightsUBO);
+    glBufferData(GL_UNIFORM_BUFFER, 320, nullptr, GL_STATIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightsUBO);
+
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), &lightData.pointLights[0].position);
+    glBufferSubData(GL_UNIFORM_BUFFER, 1 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].ambient);
+    glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].diffuse);
+    glBufferSubData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].specular);
+    glBufferSubData(GL_UNIFORM_BUFFER, 60, sizeof(float), &lightData.pointLights[0].constant);
+    glBufferSubData(GL_UNIFORM_BUFFER, 64, sizeof(float), &lightData.pointLights[0].linear);
+    glBufferSubData(GL_UNIFORM_BUFFER, 68, sizeof(float), &lightData.pointLights[0].quadrant);
+
+    std::cout << "alignment" << '\t' << "offset" << std::endl;
+    for(int i = 0; i < 4; ++i)
+    {
+        std::cout << sizeof(glm::vec4) << '\t' << i * sizeof(glm::vec4) << std::endl;
+    }
+
+    for(int i = 0; i < 3; ++i)
+    {
+        std::cout << sizeof(float) << '\t' << 4 * sizeof(glm::vec4) + i * sizeof(float) << std::endl;
+    }
 }
 
 Flicker::Renderer::Renderer(GLFWwindow* window)
@@ -53,17 +73,21 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
 
     glViewport(0, 0, m_Width, m_Height);
 
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);  
+
     m_Lights.emplace_back();
     Flicker::PointLight& light = m_Lights[0];
     Flicker::Transform& lightTransform = light.transform;
-    lightTransform.position = {-1, 2, -3};
+    lightTransform.position = {-3, 2, -3};
 
-    setupUniformBuffers();
 
     m_Model = Flicker::Assets::loadModel("teapot.fbx");
     m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
     Flicker::Transform& modelTransform = m_Model->transform;
     modelTransform.position = {0, -1, -3};
+
+    setupUniformBuffers();
 
     // glfwSetFramebufferSizeCallback(window, &onWindowResize);
 }
