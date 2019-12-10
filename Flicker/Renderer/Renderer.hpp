@@ -7,7 +7,7 @@ namespace Flicker
     class Shader;
     class Model;
     class Camera;
-
+    class LightingData;
 
     class Renderer
     {
@@ -33,7 +33,7 @@ namespace Flicker
 
         GLuint m_CameraUBO, m_LightsUBO;
 
-        std::vector<PointLight> m_Lights;
+        std::unique_ptr<LightingData> m_Lighting;
         std::shared_ptr<Model> m_Model;
     };
 }

@@ -1,1 +1,1 @@
-target_sources(Flicker PUBLIC Light.hpp Light.cpp PointLight.hpp LightUniformData.hpp)
+target_sources(Flicker PUBLIC Light.hpp Light.cpp PointLight.hpp LightingData.hpp LightingData.cpp)

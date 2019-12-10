@@ -3,6 +3,7 @@
 #include "Assets/Assets.hpp"
 #include "Shader/Shader.hpp"
 #include "Transform/Camera.hpp"
+#include "Light/LightingData.hpp"
 
 Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window) 
 {
