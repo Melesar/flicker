@@ -30,19 +30,6 @@ void Flicker::Renderer::setupUniformBuffers()
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_CameraUBO);
 
     m_Lighting->buildLightingBuffer();
-
-    // glGenBuffers(1, &m_LightsUBO);
-    // glBindBuffer(GL_UNIFORM_BUFFER, m_LightsUBO);
-    // glBufferData(GL_UNIFORM_BUFFER, 320, nullptr, GL_STATIC_DRAW);
-    // glBindBufferBase(GL_UNIFORM_BUFFER, 1, m_LightsUBO);
-
-    // glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::vec3), &lightData.pointLights[0].position);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 1 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].ambient);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].diffuse);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 3 * sizeof(glm::vec4), sizeof(glm::vec3), &lightData.pointLights[0].specular);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 60, sizeof(float), &lightData.pointLights[0].constant);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 64, sizeof(float), &lightData.pointLights[0].linear);
-    // glBufferSubData(GL_UNIFORM_BUFFER, 68, sizeof(float), &lightData.pointLights[0].quadrant);
 }
 
 Flicker::Renderer::Renderer(GLFWwindow* window)

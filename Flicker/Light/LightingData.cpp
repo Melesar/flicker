@@ -12,12 +12,10 @@ void Flicker::LightingData::buildLightingBuffer()
     glBufferData(GL_UNIFORM_BUFFER, bufferSize, nullptr, GL_STATIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, BUFFER_BINDING, m_LightsUBO);
 
-    const int uniformCount = NUM_VARS * NUM_POINT_LIGHTS;
-    GLuint indices[uniformCount];
-    GLint offsets[uniformCount];
+    GLuint indices[POINT_LIGHT_UNIFORMS_COUNT];
 
-    glGetUniformIndices(m_ProgramID, uniformCount, m_UniformNames, indices);
-    glGetActiveUniformsiv(m_ProgramID, uniformCount, indices, GL_UNIFORM_OFFSET, offsets);
+    glGetUniformIndices(m_ProgramID, POINT_LIGHT_UNIFORMS_COUNT, m_UniformNames, indices);
+    glGetActiveUniformsiv(m_ProgramID, POINT_LIGHT_UNIFORMS_COUNT, indices, GL_UNIFORM_OFFSET, m_PointLightUniformOffsets);
 
     size_t numLights = m_PointLights.size();
     for(size_t light = 0; light < NUM_POINT_LIGHTS; ++light)
@@ -26,16 +24,16 @@ void Flicker::LightingData::buildLightingBuffer()
         ? PointLightData {m_PointLights[light]}
         : PointLightData {};
 
-        int var = 0;
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(glm::vec3), &pointLightData.position);
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(glm::vec3), &pointLightData.ambient);
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(glm::vec3), &pointLightData.diffuse);
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(glm::vec3), &pointLightData.specular);
-
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(float), &pointLightData.constant);
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(float), &pointLightData.linear);
-        glBufferSubData(GL_UNIFORM_BUFFER, offsets[light * NUM_VARS + var++], sizeof(float), &pointLightData.quadrant);
+        setPointLightData(light, POINT_LIGHT_POSITION, pointLightData.position);
+        setPointLightData(light, POINT_LIGHT_AMBIENT, pointLightData.ambient);
+        setPointLightData(light, POINT_LIGHT_DIFFUSE, pointLightData.diffuse);
+        setPointLightData(light, POINT_LIGHT_SPECULAR, pointLightData.specular);
+        setPointLightData(light, POINT_LIGHT_CONSTANT, pointLightData.constant);
+        setPointLightData(light, POINT_LIGHT_LINEAR, pointLightData.linear);
+        setPointLightData(light, POINT_LIGHT_QUADRANT, pointLightData.quadrant);
     }
+
+    m_IsBuilt = true;
 }
 
 GLint Flicker::LightingData::getBufferSize() const
@@ -58,6 +56,23 @@ Flicker::PointLight* Flicker::LightingData::addPointLight(glm::vec3 position)
     light.setPosition(position);
 
     return &light;
+}
+
+void Flicker::LightingData::setPointLightPosition(size_t lightIndex, glm::vec3 position)
+{
+    assert(lightIndex < NUM_POINT_LIGHTS);
+
+    Flicker::PointLight& lightObject = m_PointLights[lightIndex];
+    lightObject.setPosition(position);
+
+    setPointLightData(lightIndex, POINT_LIGHT_POSITION, position, true);
+}
+
+glm::vec3 Flicker::LightingData::getPointLightPosition(size_t lightIndex)
+{
+    assert(lightIndex < NUM_POINT_LIGHTS);
+
+    return m_PointLights[lightIndex].transform.position;
 }
 
 int Flicker::LightingData::pointLightsCount() const
