@@ -1,4 +1,4 @@
-#pragma once
+    #pragma once
 #include "Transform.hpp"
 
 namespace Flicker

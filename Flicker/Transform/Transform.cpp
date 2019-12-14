@@ -4,11 +4,15 @@ glm::mat4x4 Flicker::Transform::localToWorldMatrix() const
 {
     //TODO add support for rotations
     glm::mat4x4 localTRS = glm::translate(position);
+    localTRS = glm::rotate(localTRS, glm::radians(rotation.y), {0, 1, 0});
+    localTRS = glm::rotate(localTRS, glm::radians(rotation.x), {1, 0, 0});
+    localTRS = glm::rotate(localTRS, glm::radians(rotation.z), {0, 0, 1});
     localTRS = glm::scale(localTRS, scale);
+
     Transform* parent = this->parent;
     while(parent != nullptr)
     {
-        localTRS *= parent->localToWorldMatrix();
+        localTRS = parent->localToWorldMatrix() *  localTRS;
         parent = parent->parent;
     }
 

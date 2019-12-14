@@ -33,6 +33,7 @@ namespace Flicker
 
         GLuint m_CameraUBO, m_LightsUBO;
 
+        Transform m_ModelParent;
         std::unique_ptr<LightingData> m_Lighting;
         std::shared_ptr<Model> m_Model;
     };
