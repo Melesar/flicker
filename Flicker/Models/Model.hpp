@@ -14,7 +14,6 @@ namespace Flicker
         Model(const aiScene* scene);
         virtual ~Model();
 
-        void bind() const;
         void draw();
 
         Material* getMaterial(int index);
@@ -47,8 +46,6 @@ namespace Flicker
 
         std::vector<Mesh> m_Meshes;
         std::vector<std::unique_ptr<Material>> m_Materials;
-
-        size_t m_IndexCount {0};
 
         GLuint m_VAO;
 

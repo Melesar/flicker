@@ -23,11 +23,6 @@ Flicker::Model::~Model()
     glDeleteVertexArrays(1, &m_VAO);
 }
 
-void Flicker::Model::bind() const
-{
-    glBindVertexArray(m_VAO);
-}
-
 void Flicker::Model::draw()
 {
     glBindVertexArray(m_VAO);
@@ -60,11 +55,6 @@ Flicker::Material* Flicker::Model::getMaterial (int index)
 size_t Flicker::Model::meshesCount() const
 {
     return m_Meshes.size();
-}
-
-size_t Flicker::Model::indexCount() const
-{
-    return m_IndexCount;
 }
 
 const Flicker::Mesh& Flicker::Model::getMesh(size_t index) const
@@ -146,8 +136,8 @@ void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
         v.normal = vec3(normal);
 
         v.uv = mesh->mTextureCoords[0]
-        ? vec2(mesh->mTextureCoords[0][i])
-        : glm::vec2();
+            ? vec2(mesh->mTextureCoords[0][i])
+            : glm::vec2();
 
         verts.push_back(v);
     }
@@ -161,28 +151,6 @@ void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
     }
 
-    aiMaterial* mat = scene->mMaterials[mesh->mMaterialIndex];
-    int diffuseTexCount = mat->GetTextureCount(aiTextureType_DIFFUSE);
-    int speculareTexCount = mat->GetTextureCount(aiTextureType_SPECULAR);
-
-    std::cout << "Diffuse textures " << diffuseTexCount << " specular textures " << speculareTexCount << std::endl;
-    for (size_t i = 0; i < diffuseTexCount; i++)
-    {
-        aiString path;
-        mat->GetTexture(aiTextureType_DIFFUSE, i, &path);
-        std::cout << "Diffuse texture " << path.C_Str() << std::endl;
-    }
-
-    for (size_t i = 0; i < speculareTexCount; i++)
-    {
-        aiString path;
-        mat->GetTexture(aiTextureType_SPECULAR, i, &path);
-        std::cout << "Specular texture " << path.C_Str() << std::endl;
-    }
-    
-
     m_Meshes.emplace_back(verts, indices);
     m_Materials.emplace_back(std::make_unique<LitMaterial>());
-
-    m_IndexCount += indices.size();
 }
