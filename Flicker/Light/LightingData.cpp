@@ -72,7 +72,7 @@ glm::vec3 Flicker::LightingData::getPointLightPosition(size_t lightIndex)
 {
     assert(lightIndex < NUM_POINT_LIGHTS);
 
-    return m_PointLights[lightIndex].transform.position;
+    return m_PointLights[lightIndex].transform.worldPosition();
 }
 
 int Flicker::LightingData::pointLightsCount() const

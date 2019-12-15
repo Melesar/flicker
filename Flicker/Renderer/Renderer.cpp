@@ -51,10 +51,10 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     m_Model = Flicker::Assets::loadModel("teapot.fbx");
     m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
     Flicker::Transform& modelTransform = m_Model->transform;
-    modelTransform.position = {0, 0, 1};
+    modelTransform.setLocalPosition({0, 0, 1});
 
-    m_ModelParent.position = {0, -1, -4};
-    modelTransform.setParent(m_ModelParent);
+    m_ModelParent.setLocalPosition({0, -1, -4});
+    modelTransform.setParent(&m_ModelParent);
 
     setupUniformBuffers();
 

@@ -11,7 +11,7 @@ namespace Flicker
 
         void setPosition(glm::vec3 pos)
         {
-            transform.position = pos;
+            transform.setWorldPosition(pos);
         }
     };
 }
