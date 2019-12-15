@@ -1,0 +1,1 @@
+target_sources(Flicker PUBLIC tests.hpp transform_tests.hpp)

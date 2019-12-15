@@ -3,9 +3,9 @@ namespace glm
 {
     glm::mat4 rotation_matrix(glm::mat4 m, glm::vec3 rotation)
     {
+        m = glm::rotate(m, glm::radians(rotation.z), {0, 0, 1});
         m = glm::rotate(m, glm::radians(rotation.x), {1, 0, 0});
         m = glm::rotate(m, glm::radians(rotation.y), {0, 1, 0});
-        m = glm::rotate(m, glm::radians(rotation.z), {0, 0, 1});
 
         return m;
     }
