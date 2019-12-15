@@ -1,14 +1,13 @@
     #pragma once
-#include "Transform.hpp"
+#include "Node.hpp"
 
 namespace Flicker
 {
-    class Camera
+    class Camera : public Node
     {
     public:
         float fov {60};
         float zNear {0.1f}, zFar {100.f};
-        Transform transform;
 
     public:
 

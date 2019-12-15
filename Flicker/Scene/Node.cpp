@@ -1,4 +1,4 @@
-#include "Transform.hpp"
+#include "Node.hpp"
 #include <glm/gtx/matrix_decompose.hpp>
 #include "Utils/utils.hpp"
 
@@ -11,14 +11,14 @@ void decomposeMatrix(glm::mat4 matrix)
     glm::decompose(matrix, scale, rot, translation, skew, perspective);
 }
 
-glm::mat4x4 Flicker::Transform::localToWorldMatrix()
+glm::mat4x4 Flicker::Node::localToWorldMatrix()
 {
     rebuildMatrixIfNeeded();
 
     return m_LocalToWorld;
 }
 
-void Flicker::Transform::setParent(Transform* parent)
+void Flicker::Node::setParent(Node* parent)
 {
     if (m_Parent == parent)
     {
@@ -30,39 +30,39 @@ void Flicker::Transform::setParent(Transform* parent)
     m_Parent->m_Children.push_back(this);
 }
 
-Flicker::Transform& Flicker::Transform::getParent()
+Flicker::Node& Flicker::Node::getParent()
 {
     return *m_Parent;
 }
 
-Flicker::Transform& Flicker::Transform::getChild(int index)
+Flicker::Node& Flicker::Node::getChild(int index)
 {
     assert(index >= 0 && index < childCount());
 
     return *m_Children[index];
 }
 
-int Flicker::Transform::childCount() const
+int Flicker::Node::childCount() const
 {
     return m_Children.size();
 }
 
-glm::vec3 Flicker::Transform::localPosition() const
+glm::vec3 Flicker::Node::localPosition() const
 {
     return m_LocalPosition;
 }
 
-glm::vec3 Flicker::Transform::localRotation() const
+glm::vec3 Flicker::Node::localRotation() const
 {
     return m_LocalRotation;
 }
 
-glm::vec3 Flicker::Transform::localScale() const
+glm::vec3 Flicker::Node::localScale() const
 {
     return m_LocalScale;
 }
 
-glm::vec3 Flicker::Transform::worldPosition() const
+glm::vec3 Flicker::Node::worldPosition() const
 {
     glm::mat4 matrix = getParentMatrix() * glm::translate(m_LocalPosition);
 
@@ -71,7 +71,7 @@ glm::vec3 Flicker::Transform::worldPosition() const
     return translation;
 }
 
-glm::vec3 Flicker::Transform::worldRotation() const
+glm::vec3 Flicker::Node::worldRotation() const
 {
     glm::mat4 rotationMatrix = glm::rotation_matrix(glm::mat4(1.f), m_LocalRotation);
     glm::mat4 matrix = getParentMatrix() * rotationMatrix;
@@ -81,7 +81,7 @@ glm::vec3 Flicker::Transform::worldRotation() const
     return glm::quat_to_euler(glm::conjugate(rot));
 }
 
-glm::vec3 Flicker::Transform::worldScale() const
+glm::vec3 Flicker::Node::worldScale() const
 {
     glm::mat4 matrix = getParentMatrix() * glm::scale(m_LocalScale);
 
@@ -90,32 +90,43 @@ glm::vec3 Flicker::Transform::worldScale() const
     return scale;
 }
 
-void Flicker::Transform::setLocalPosition(glm::vec3 position)
+void Flicker::Node::setTRS(glm::mat4 trs)
+{
+    decomposeMatrix(trs);
+
+    m_LocalPosition = translation;
+    m_LocalRotation = glm::quat_to_euler(glm::conjugate(rot));
+    m_LocalScale = scale;
+
+    rebuildMatrix();
+}
+
+void Flicker::Node::setLocalPosition(glm::vec3 position)
 {
     m_LocalPosition = position;
     m_IsDirty = true;
 }
 
-void Flicker::Transform::setLocalRotation(glm::vec3 rotation)
+void Flicker::Node::setLocalRotation(glm::vec3 rotation)
 {
     m_LocalRotation = rotation;
     m_IsDirty = true;
 }
 
-void Flicker::Transform::setLocalScale(glm::vec3 scale)
+void Flicker::Node::setLocalScale(glm::vec3 scale)
 {
     m_LocalScale = scale;
     m_IsDirty = true;
 }
 
-void Flicker::Transform::setLocal(glm::vec3 position, glm::vec3 rotation)
+void Flicker::Node::setLocal(glm::vec3 position, glm::vec3 rotation)
 {
     m_LocalPosition = position;
     m_LocalRotation = rotation;
     m_IsDirty = true;
 }
 
-void Flicker::Transform::setLocal(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale)
+void Flicker::Node::setLocal(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale)
 {
     m_LocalPosition = position;
     m_LocalRotation = rotation;
@@ -123,7 +134,7 @@ void Flicker::Transform::setLocal(glm::vec3 position, glm::vec3 rotation, glm::v
     m_IsDirty = true;
 }
 
-void Flicker::Transform::setWorldPosition(glm::vec3 position)
+void Flicker::Node::setWorldPosition(glm::vec3 position)
 {
     glm::mat4 matrix = glm::inverse(localToWorldMatrix()) * glm::translate(position);
 
@@ -132,7 +143,7 @@ void Flicker::Transform::setWorldPosition(glm::vec3 position)
     setLocalPosition(translation);
 }
 
-void Flicker::Transform::setWorldRotation(glm::vec3 rotation)
+void Flicker::Node::setWorldRotation(glm::vec3 rotation)
 {
     glm::mat4 matrix = glm::inverse(localToWorldMatrix()) * glm::rotation_matrix(glm::mat4(1.f), rotation);
 
@@ -141,7 +152,7 @@ void Flicker::Transform::setWorldRotation(glm::vec3 rotation)
     setLocalRotation(glm::quat_to_euler(glm::conjugate(rot)));
 }
 
-void Flicker::Transform::setWorld(glm::vec3 position, glm::vec3 rotation)
+void Flicker::Node::setWorld(glm::vec3 position, glm::vec3 rotation)
 {
     glm::mat4 matrix = glm::trs(position, rotation, {1, 1, 1});
     matrix = glm::inverse(localToWorldMatrix()) * matrix;
@@ -151,18 +162,18 @@ void Flicker::Transform::setWorld(glm::vec3 position, glm::vec3 rotation)
     setLocal(translation, glm::quat_to_euler(glm::conjugate(rot)));
 }
 
-Flicker::Transform::Transform()
+Flicker::Node::Node()
 {
 
 }
 
-void Flicker::Transform::rebuildMatrix()
+void Flicker::Node::rebuildMatrix()
 {
     m_LocalToWorld = glm::trs(m_LocalPosition, m_LocalRotation, m_LocalScale);
     m_LocalToWorld = getParentMatrix() * m_LocalToWorld;
 }
 
-void Flicker::Transform::rebuildMatrixIfNeeded()
+void Flicker::Node::rebuildMatrixIfNeeded()
 {
     if (m_IsDirty)
     {
@@ -170,10 +181,10 @@ void Flicker::Transform::rebuildMatrixIfNeeded()
     }
 }
 
-glm::mat4 Flicker::Transform::getParentMatrix() const
+glm::mat4 Flicker::Node::getParentMatrix() const
 {
     glm::mat4 m (1.f);
-    Transform* parent = m_Parent;
+    Node* parent = m_Parent;
     while(parent != nullptr)
     {
         m = parent->localToWorldMatrix() * m;

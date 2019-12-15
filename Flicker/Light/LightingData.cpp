@@ -53,7 +53,7 @@ Flicker::PointLight* Flicker::LightingData::addPointLight(glm::vec3 position)
     }
 
     PointLight& light = m_PointLights.emplace_back();
-    light.setPosition(position);
+    light.setWorldPosition(position);
 
     return &light;
 }
@@ -63,7 +63,7 @@ void Flicker::LightingData::setPointLightPosition(size_t lightIndex, glm::vec3 p
     assert(lightIndex < NUM_POINT_LIGHTS);
 
     Flicker::PointLight& lightObject = m_PointLights[lightIndex];
-    lightObject.setPosition(position);
+    lightObject.setWorldPosition(position);
 
     setPointLightData(lightIndex, POINT_LIGHT_POSITION, position, true);
 }
@@ -72,7 +72,7 @@ glm::vec3 Flicker::LightingData::getPointLightPosition(size_t lightIndex)
 {
     assert(lightIndex < NUM_POINT_LIGHTS);
 
-    return m_PointLights[lightIndex].transform.worldPosition();
+    return m_PointLights[lightIndex].worldPosition();
 }
 
 int Flicker::LightingData::pointLightsCount() const

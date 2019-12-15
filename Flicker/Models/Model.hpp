@@ -1,5 +1,5 @@
 #pragma once
-#include "Transform/Transform.hpp"
+#include "Scene/Node.hpp"
 
 struct aiScene;
 
@@ -8,10 +8,11 @@ namespace Flicker
     class Mesh;
     class Material;
 
-    class Model
+    class Model : public Node
     {
     public:
         Model(const aiScene* scene);
+        Model(const aiNode* node, const aiScene* scene, Node* parent);
         virtual ~Model();
 
         void draw();
@@ -32,20 +33,17 @@ namespace Flicker
 
     private:
 
-        void processNode(aiNode* node, const aiScene* scene);
-        void processMesh(aiMesh* mesh, const aiScene* scene);
+        void processNode(const aiNode* node, const aiScene* scene);
+        void processMesh(const aiMesh* mesh, const aiScene* scene);
 
         void createBuffers();
         void createBuffers(size_t meshIndex);
-
-    public:
-
-        Transform transform;
 
     private:
 
         std::vector<Mesh> m_Meshes;
         std::vector<std::unique_ptr<Material>> m_Materials;
+        std::vector<std::unique_ptr<Model>> m_Children;
 
         GLuint m_VAO;
 

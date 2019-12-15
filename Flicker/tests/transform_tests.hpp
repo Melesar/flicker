@@ -1,8 +1,8 @@
-#include "Transform/Transform.hpp"
+#include "Scene/Node.hpp"
 
 void test_local_values()
 {
-    Flicker::Transform t;
+    Flicker::Node t;
     t.setLocal({1, 2, 0}, {45, 142, 12});
 
     glm::mat4 locToWorld = t.localToWorldMatrix();

@@ -1,9 +1,9 @@
 #include "Renderer.hpp"
 #include "Assets/Assets.hpp"
-#include "Transform/Camera.hpp"
+#include "Scene/Camera.hpp"
 #include "Models/Model.hpp"
 #include "Material/LitMaterial.hpp"
-#include "Transform/Transform.hpp"
+#include "Scene/Node.hpp"
 #include "Light/LightingData.hpp"
 
 void Flicker::Renderer::render(Camera* camera)
@@ -51,11 +51,10 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     // m_Model = Flicker::Assets::loadModel("teapot.fbx");
     m_Model = Flicker::Assets::loadModel("Car.FBX");
     m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
-    Flicker::Transform& modelTransform = m_Model->transform;
-    modelTransform.setLocalPosition({0, 0, 1});
+    m_Model->setLocalPosition({0, 0, 1});
 
     m_ModelParent.setLocalPosition({0, -1, -4});
-    modelTransform.setParent(&m_ModelParent);
+    m_Model->setParent(&m_ModelParent);
 
     setupUniformBuffers();
 

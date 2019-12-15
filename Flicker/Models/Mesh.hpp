@@ -1,5 +1,5 @@
 #pragma once 
-#include "Transform/Transform.hpp"
+#include "Scene/Node.hpp"
 
 namespace Flicker
 {
@@ -28,7 +28,7 @@ namespace Flicker
 
    public:
 
-        Transform transform;
+        Node transform;
 
     private:
 

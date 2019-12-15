@@ -101,7 +101,7 @@ namespace Flicker
 
         PointLightData(const PointLight& light)
         {
-            position = light.transform.worldPosition();
+            position = light.worldPosition();
 
             ambient = light.ambient;
             diffuse = light.diffuse;

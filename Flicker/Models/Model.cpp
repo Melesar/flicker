@@ -18,6 +18,13 @@ Flicker::Model::Model(const aiScene* scene)
     createBuffers();
 }
 
+Flicker::Model::Model(const aiNode* node, const aiScene* scene, Node* parent)
+{
+    setParent(parent);
+    processNode(node, scene);
+    createBuffers();
+}
+
 Flicker::Model::~Model()
 {
     glDeleteVertexArrays(1, &m_VAO);
@@ -32,7 +39,7 @@ void Flicker::Model::draw()
         std::unique_ptr<Material>& mat = m_Materials[i];
         Mesh& mesh = m_Meshes[i];
 
-        mat->setModelMatrix(transform.localToWorldMatrix());
+        mat->setModelMatrix(localToWorldMatrix());
 
         //TODO respect child-parent relations
         // mat->setModelMatrix(mesh.transform.localToWorldMatrix());
@@ -107,7 +114,7 @@ void Flicker::Model::createBuffers(size_t meshIndex)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
 }
 
-void Flicker::Model::processNode(aiNode* node, const aiScene* scene)
+void Flicker::Model::processNode(const aiNode* node, const aiScene* scene)
 {
     for(size_t i = 0; i < node->mNumMeshes; i++)
     {
@@ -121,7 +128,7 @@ void Flicker::Model::processNode(aiNode* node, const aiScene* scene)
     }
 }
 
-void Flicker::Model::processMesh(aiMesh* mesh, const aiScene* scene)
+void Flicker::Model::processMesh(const aiMesh* mesh, const aiScene* scene)
 {
     std::vector<Flicker::Vertex> verts;
     std::vector<int> indices;

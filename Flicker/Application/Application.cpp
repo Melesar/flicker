@@ -1,6 +1,6 @@
 #include "Application.hpp"
 #include "Renderer/ForwardRenderer.hpp"
-#include "Transform/Camera.hpp"
+#include "Scene/Camera.hpp"
 
 void Flicker::Application::run()
 {

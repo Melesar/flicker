@@ -2,14 +2,14 @@
 
 namespace Flicker
 {
-    class Transform
+    class Node
     {
     public:
 
-        void setParent(Transform* parent);
+        void setParent(Node* parent);
 
-        Transform& getParent();
-        Transform& getChild(int index);
+        Node& getParent();
+        Node& getChild(int index);
         int childCount() const;  
 
         glm::vec3 localPosition() const;
@@ -19,6 +19,8 @@ namespace Flicker
         glm::vec3 worldPosition() const;
         glm::vec3 worldRotation() const;
         glm::vec3 worldScale() const;
+
+        void setTRS(glm::mat4 trs);
 
         void setLocalPosition(glm::vec3 position);
         void setLocalRotation(glm::vec3 rotation);
@@ -32,7 +34,7 @@ namespace Flicker
 
         glm::mat4x4 localToWorldMatrix();
 
-        Transform();
+        Node();
 
     private:
 
@@ -51,7 +53,7 @@ namespace Flicker
 
         bool m_IsDirty {false};
 
-        Transform* m_Parent {nullptr};
-        std::vector<Transform*> m_Children;
+        Node* m_Parent {nullptr};
+        std::vector<Node*> m_Children;
     };
 }

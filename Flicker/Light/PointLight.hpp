@@ -8,10 +8,5 @@ namespace Flicker
         float constant {POINT_LIGHT_CONSTANT_ATTENUATION};
         float linear {POINT_LIGHT_LINEAR_ATTENUATION};
         float quadrant {POINT_LIGHT_QUADRATIC_ATTENUATION};
-
-        void setPosition(glm::vec3 pos)
-        {
-            transform.setWorldPosition(pos);
-        }
     };
 }
