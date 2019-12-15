@@ -9,7 +9,7 @@ Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window)
 {
 }
 
-void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Camera* camera)
+void Flicker::ForwardRenderer::renderScene(Camera* camera, Scene* scene)
 {
     glm::mat4x4 viewProjMatrix = camera->worldToClipMatrix();
 
@@ -18,10 +18,5 @@ void Flicker::ForwardRenderer::renderModel(Flicker::Model* model, Camera* camera
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4), sizeof(glm::vec3), glm::value_ptr(camera->worldPosition()));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    m_Model->draw();
-}
-
-void Flicker::ForwardRenderer::renderScene(Camera* camera)
-{
-    renderModel(m_Model.get(), camera);
+    // renderModel(m_Model.get(), camera);
 }

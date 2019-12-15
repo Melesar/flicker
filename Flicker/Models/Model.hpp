@@ -8,6 +8,7 @@ namespace Flicker
     class Mesh;
     class Material;
 
+
     class Model : public Node
     {
     public:

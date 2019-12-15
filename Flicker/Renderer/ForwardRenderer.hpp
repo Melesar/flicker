@@ -12,10 +12,6 @@ namespace Flicker
 
     protected:
 
-        void renderScene(Camera* camera) override;
-
-    private:
-    
-        void renderModel(Model* model, Camera* camera);
+        void renderScene(Camera* camera, Scene* scene) override;
     };
 }

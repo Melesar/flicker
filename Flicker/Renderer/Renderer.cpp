@@ -6,12 +6,12 @@
 #include "Scene/Node.hpp"
 #include "Light/LightingData.hpp"
 
-void Flicker::Renderer::render(Camera* camera)
+void Flicker::Renderer::render(Camera* camera, Scene* scene)
 {
     glClearColor(0.14f, 0.43f, 0.85f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    renderScene(camera);
+    renderScene(camera, scene);
 }
 
 void Flicker::Renderer::onWindowResize(GLFWwindow* window, int width, int height)
@@ -49,12 +49,12 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     m_Lighting->addPointLight({-3, 2, -3});
 
     // m_Model = Flicker::Assets::loadModel("teapot.fbx");
-    m_Model = Flicker::Assets::loadModel("Car.FBX");
-    m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
-    m_Model->setLocalPosition({0, 0, 1});
+    // m_Model = Flicker::Assets::loadModel("Car.FBX");
+    // m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
+    // m_Model->setLocalPosition({0, 0, 1});
 
-    m_ModelParent.setLocalPosition({0, -1, -4});
-    m_Model->setParent(&m_ModelParent);
+    // m_ModelParent.setLocalPosition({0, -1, -4});
+    // m_Model->setParent(&m_ModelParent);
 
     setupUniformBuffers();
 

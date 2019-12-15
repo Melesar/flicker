@@ -5,13 +5,14 @@ namespace Flicker
 {
     class Shader;
     class Model;
+    class Node;
 
     class Assets
     {
     public:
 
         static std::shared_ptr<Shader> loadShader(std::string name); 
-        static std::shared_ptr<Model> loadModel(std::string name);
+        static std::shared_ptr<Node> loadModel(std::string name);
 
         static std::string getFileContents(std::string fileName);
 
@@ -36,7 +37,7 @@ namespace Flicker
         Assets();
 
         static std::unordered_map<std::string, std::shared_ptr<Shader>> m_LoadedShaders;
-        static std::unordered_map<std::string, std::shared_ptr<Model>> m_LoadedModels;
+        static std::unordered_map<std::string, std::shared_ptr<Node>> m_LoadedModels;
     };
 }
 

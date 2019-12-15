@@ -1,17 +1,18 @@
 #include "Assets.hpp"
 #include "Shader/Shader.hpp"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include "Models/Model.hpp"
+// #include <assimp/Importer.hpp>
+// #include <assimp/scene.h>
+// #include <assimp/postprocess.h>
+#include "Scene/Node.hpp"
+#include "Models/model_import.hpp"
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 std::unordered_map<std::string, std::shared_ptr<Flicker::Shader>> Flicker::Assets::m_LoadedShaders;
-std::unordered_map<std::string, std::shared_ptr<Flicker::Model>> Flicker::Assets::m_LoadedModels;
+std::unordered_map<std::string, std::shared_ptr<Flicker::Node>> Flicker::Assets::m_LoadedModels;
 
 std::shared_ptr<Flicker::Shader> Flicker::Assets::loadShader(std::string name)
 {
@@ -33,10 +34,10 @@ std::shared_ptr<Flicker::Shader> Flicker::Assets::loadShader(std::string name)
     return shader;
 }
 
-std::shared_ptr<Flicker::Model> Flicker::Assets::loadModel(std::string name)
+std::shared_ptr<Flicker::Node> Flicker::Assets::loadModel(std::string name)
 {
-    std::shared_ptr<Flicker::Model> model;
-    if (tryGetLoadedAsset<Flicker::Model>(name, m_LoadedModels, model))
+    std::shared_ptr<Flicker::Node> model;
+    if (tryGetLoadedAsset<Flicker::Node>(name, m_LoadedModels, model))
     {
         return model;
     }
@@ -52,7 +53,7 @@ std::shared_ptr<Flicker::Model> Flicker::Assets::loadModel(std::string name)
         return model;
     }
 
-    model = std::make_shared<Model>(scene);
+    model = Flicker::parse_scene(scene);
 
     m_LoadedModels[name] = model;
 

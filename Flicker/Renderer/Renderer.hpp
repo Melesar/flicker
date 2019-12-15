@@ -8,11 +8,12 @@ namespace Flicker
     class Model;
     class Camera;
     class LightingData;
+    class Scene;
 
     class Renderer
     {
     public: 
-        void render(Camera* camera);
+        void render(Camera* camera, Scene* scene);
 
         Renderer(GLFWwindow* window);
         virtual ~Renderer() = default;
@@ -21,7 +22,7 @@ namespace Flicker
 
         void onWindowResize(GLFWwindow* window, int width, int height);
         
-        virtual void renderScene(Camera* camera) = 0;
+        virtual void renderScene(Camera* camera, Scene* scene) = 0;
 
     private:
 
@@ -33,8 +34,6 @@ namespace Flicker
 
         GLuint m_CameraUBO, m_LightsUBO;
 
-        Node m_ModelParent;
         std::unique_ptr<LightingData> m_Lighting;
-        std::shared_ptr<Model> m_Model;
     };
 }

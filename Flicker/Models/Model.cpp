@@ -12,6 +12,8 @@ glm::vec2 vec2 (aiVector3D vec)
     return {vec.x, vec.y};
 }
 
+
+
 Flicker::Model::Model(const aiScene* scene)
 {
     processNode(scene->mRootNode, scene);
