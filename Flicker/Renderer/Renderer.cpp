@@ -48,14 +48,6 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
     m_Lighting = std::make_unique<LightingData>();
     m_Lighting->addPointLight({-3, 2, -3});
 
-    // m_Model = Flicker::Assets::loadModel("teapot.fbx");
-    // m_Model = Flicker::Assets::loadModel("Car.FBX");
-    // m_Model->getMaterial<LitMaterial>(0)->setColor({1, 0.534, 0.874, 1});
-    // m_Model->setLocalPosition({0, 0, 1});
-
-    // m_ModelParent.setLocalPosition({0, -1, -4});
-    // m_Model->setParent(&m_ModelParent);
-
     setupUniformBuffers();
 
     // glfwSetFramebufferSizeCallback(window, &onWindowResize);

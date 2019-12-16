@@ -35,6 +35,7 @@ namespace Flicker
         glm::mat4x4 localToWorldMatrix();
 
         Node();
+        virtual ~Node();
 
     private:
 

@@ -1,8 +1,6 @@
 #pragma once
 #include "Scene/Node.hpp"
 
-struct aiScene;
-
 namespace Flicker
 {
     class Mesh;
@@ -12,7 +10,6 @@ namespace Flicker
     class Model : public Node
     {
     public:
-        Model(const aiScene* scene);
         Model(const aiNode* node, const aiScene* scene, Node* parent);
         virtual ~Model();
 
@@ -34,7 +31,7 @@ namespace Flicker
 
     private:
 
-        void processNode(const aiNode* node, const aiScene* scene);
+        void processSingleNode(const aiNode* node, const aiScene* scene);
         void processMesh(const aiMesh* mesh, const aiScene* scene);
 
         void createBuffers();

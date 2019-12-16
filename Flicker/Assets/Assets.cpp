@@ -1,9 +1,6 @@
 #include "Assets.hpp"
 #include "Shader/Shader.hpp"
 
-// #include <assimp/Importer.hpp>
-// #include <assimp/scene.h>
-// #include <assimp/postprocess.h>
 #include "Scene/Node.hpp"
 #include "Models/model_import.hpp"
 

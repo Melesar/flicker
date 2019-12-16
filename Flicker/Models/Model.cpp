@@ -12,18 +12,10 @@ glm::vec2 vec2 (aiVector3D vec)
     return {vec.x, vec.y};
 }
 
-
-
-Flicker::Model::Model(const aiScene* scene)
-{
-    processNode(scene->mRootNode, scene);
-    createBuffers();
-}
-
 Flicker::Model::Model(const aiNode* node, const aiScene* scene, Node* parent)
 {
     setParent(parent);
-    processNode(node, scene);
+    processSingleNode(node, scene);
     createBuffers();
 }
 
@@ -116,17 +108,12 @@ void Flicker::Model::createBuffers(size_t meshIndex)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
 }
 
-void Flicker::Model::processNode(const aiNode* node, const aiScene* scene)
+void Flicker::Model::processSingleNode(const aiNode* node, const aiScene* scene)
 {
     for(size_t i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         processMesh(mesh, scene);
-    }
-
-    for(size_t i = 0; i < node->mNumChildren; i++)
-    {
-        processNode(node->mChildren[i], scene);
     }
 }
 

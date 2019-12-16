@@ -25,6 +25,19 @@ void Flicker::Node::setParent(Node* parent)
         return;
     }
 
+    if (m_Parent != nullptr)
+    {
+        std::vector<Node*>& children = m_Parent->m_Children;
+        for(auto i = children.begin(); i < children.end(); ++i)
+        {
+            if (*i == this) 
+            {
+                children.erase(i);
+                break;
+            }
+        }
+    }
+
     m_Parent = parent;
     m_IsDirty = true;
     m_Parent->m_Children.push_back(this);
@@ -165,6 +178,14 @@ void Flicker::Node::setWorld(glm::vec3 position, glm::vec3 rotation)
 Flicker::Node::Node()
 {
 
+}
+
+Flicker::Node::~Node()
+{
+    for(size_t i = 0; i < childCount(); ++i)
+    {
+        delete m_Children[i];
+    }
 }
 
 void Flicker::Node::rebuildMatrix()

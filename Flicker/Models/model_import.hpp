@@ -1,7 +1,5 @@
 #pragma once
 
-struct aiScene;
-
 namespace Flicker
 {
     class Node;

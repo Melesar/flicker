@@ -1,4 +1,3 @@
-
 namespace glm
 {
     glm::mat4 rotation_matrix(glm::mat4 m, glm::vec3 rotation)

@@ -4,6 +4,7 @@
 #include "Shader/Shader.hpp"
 #include "Scene/Camera.hpp"
 #include "Light/LightingData.hpp"
+#include "Scene/Scene.hpp"
 
 Flicker::ForwardRenderer::ForwardRenderer(GLFWwindow* window) : Renderer(window) 
 {
@@ -18,5 +19,9 @@ void Flicker::ForwardRenderer::renderScene(Camera* camera, Scene* scene)
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4), sizeof(glm::vec3), glm::value_ptr(camera->worldPosition()));
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
-    // renderModel(m_Model.get(), camera);
+    const std::vector<std::unique_ptr<Model>>& models = scene->getModels();
+    for(int i = 0; i < models.size(); ++i)
+    {
+        models[i]->draw();
+    }
 }

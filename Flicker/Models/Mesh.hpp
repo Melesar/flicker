@@ -26,10 +26,6 @@ namespace Flicker
         const std::vector<Vertex>& getVertices() const;
         const std::vector<int>& getIndices() const;
 
-   public:
-
-        Node transform;
-
     private:
 
         std::vector<Vertex> m_Vertices;
