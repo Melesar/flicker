@@ -8,15 +8,18 @@ Flicker::LitMaterial::LitMaterial()
     m_Shader = Flicker::Assets::loadShader("lit");
 
     m_ModelMatrixId = m_Shader->getUniformId("modelMatrix");
-    m_ColorId = m_Shader->getUniformId("color");
-
-    // m_DiffuseId = m_Shader->getUniformId("diffuse");
+    m_DiffuseColorId = m_Shader->getUniformId("material.diffuseColor");
+    m_SpecularColorId = m_Shader->getUniformId("material.specularColor");
+    m_ShininessId = m_Shader->getUniformId("material.shininess");
 }
 
 void Flicker::LitMaterial::setProperties()
 {
     Material::setProperties();
-    m_Shader->setVector4(m_ColorId, m_CurrentColor);
+    
+    m_Shader->setVector4(m_DiffuseColorId, m_DiffuseColor);
+    m_Shader->setVector4(m_SpecularColorId, m_SpecularColor);
+    m_Shader->setFloat(m_ShininessId, m_Shininess);
 
     if (m_DiffuseTexture != nullptr)
     {
@@ -41,7 +44,17 @@ void Flicker::LitMaterial::setSpecularTexture(const Texture* texture)
     m_SpecularTexture = texture;
 }
 
-void Flicker::LitMaterial::setColor(glm::vec4 color)
+void Flicker::LitMaterial::setDiffuseColor(glm::vec4 color)
 {
-    m_CurrentColor = color;
+    m_DiffuseColor = color;
+}
+
+void Flicker::LitMaterial::setSpecularColor(glm::vec4 color)
+{
+    m_SpecularColor = color;
+}
+
+void Flicker::LitMaterial::setShininess(float shininess)
+{
+    m_Shininess = shininess;
 }

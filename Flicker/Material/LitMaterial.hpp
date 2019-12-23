@@ -11,7 +11,10 @@ namespace Flicker
         LitMaterial();
         virtual ~LitMaterial() = default;
 
-        void setColor(glm::vec4 color);
+        void setDiffuseColor(glm::vec4 color);
+        void setSpecularColor(glm::vec4 color);
+        void setShininess(float shininess);
+
         void setDiffuseTexture(const Texture* texture);
         void setSpecularTexture(const Texture* texture);
 
@@ -27,11 +30,13 @@ namespace Flicker
             SPECULAR_TEXTURE,
         };
 
-        glm::vec4 m_CurrentColor {1, 1, 1, 1};
+        glm::vec4 m_DiffuseColor {1, 1, 1, 1};
+        glm::vec4 m_SpecularColor {1, 1, 1, 1};
+        float m_Shininess {1};
 
         const Texture* m_DiffuseTexture {nullptr};
         const Texture* m_SpecularTexture {nullptr};
 
-        GLuint m_ColorId, m_DiffuseId, m_SpecularId;
+        GLuint m_DiffuseColorId, m_SpecularColorId, m_ShininessId;
     };
 }

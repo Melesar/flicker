@@ -47,12 +47,29 @@ void parse_mesh(const aiMesh* mesh, const aiScene* scene, std::vector<Flicker::M
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
     std::shared_ptr<Flicker::LitMaterial> m = std::make_shared<Flicker::LitMaterial>(); 
+
+    glm::vec4 diffuse, specular;
+    float shininess;
+    if (material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse) == AI_SUCCESS)
+    {
+        m->setDiffuseColor(diffuse);
+    }
+
+    if (material->Get(AI_MATKEY_COLOR_SPECULAR, specular) == AI_SUCCESS)
+    {
+        m->setSpecularColor(specular);
+    }
+
+    if (material->Get(AI_MATKEY_SHININESS, shininess))
+    {
+        m->setShininess(shininess);
+    }
+
     if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0) 
     {
         aiString path;
         material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
         
-        std::cout << "Diffuse texture: " << path.C_Str() << std::endl;
         std::shared_ptr<Flicker::Texture> diffuse = Flicker::Assets::loadTextureByPath(modelFolder + '/' + path.C_Str());
         m->setDiffuseTexture(diffuse.get());
     }
@@ -62,7 +79,6 @@ void parse_mesh(const aiMesh* mesh, const aiScene* scene, std::vector<Flicker::M
         aiString path;
         material->GetTexture(aiTextureType_SPECULAR, 0, &path);
         
-        std::cout << "Specular texture: " << path.C_Str() << std::endl;
         std::shared_ptr<Flicker::Texture> specular = Flicker::Assets::loadTextureByPath(modelFolder + '/' + path.C_Str());
         m->setSpecularTexture(specular.get());
     }
