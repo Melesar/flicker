@@ -28,8 +28,6 @@ void Flicker::Renderer::setupUniformBuffers()
     glBindBuffer(GL_UNIFORM_BUFFER, m_CameraUBO);
     glBufferData(GL_UNIFORM_BUFFER, sizeof(glm::mat4x4) + sizeof(glm::vec3), nullptr, GL_DYNAMIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_CameraUBO);
-
-    m_Lighting->buildLightingBuffer();
 }
 
 Flicker::Renderer::Renderer(GLFWwindow* window)
@@ -44,9 +42,6 @@ Flicker::Renderer::Renderer(GLFWwindow* window)
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS); 
-
-    m_Lighting = std::make_unique<LightingData>();
-    m_Lighting->addPointLight({-3, 2, -3});
 
     setupUniformBuffers();
 

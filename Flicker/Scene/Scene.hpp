@@ -1,5 +1,6 @@
 #pragma once
 #include "Node.hpp"
+#include "Light/LightingData.hpp"
 
 namespace Flicker
 {
@@ -19,9 +20,9 @@ namespace Flicker
 
     private:
         Node m_Root;
+        LightingData m_LightingData;
 
         void addNode(Node* node);
-
         void addModels(Node* parent);
 
         std::vector<std::unique_ptr<Light>> m_Lights;

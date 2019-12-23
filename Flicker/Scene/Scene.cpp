@@ -5,7 +5,8 @@
 
 void Flicker::Scene::update(float deltaTime)
 {
-    
+    Node& model = m_Root.getChild(0);
+    model.setLocalPosition({3 * glm::sin(glfwGetTime()), -8, -15});
 }
 
 const std::vector<std::unique_ptr<Flicker::Model>>& Flicker::Scene::getModels() const
@@ -18,11 +19,13 @@ Flicker::Scene::Scene()
     std::shared_ptr<Node> nanosuit = Assets::loadModel("nanosuit/nanosuit.obj");
     nanosuit->setLocalPosition({0, -8, -15});
     addNode(nanosuit.get());
+
+    m_LightingData.addPointLight({-3, 3, -12});
+    m_LightingData.buildLightingBuffer();
 }
 
 Flicker::Scene::~Scene()
 {
-
 }
 
 void Flicker::Scene::addNode(Node* node)

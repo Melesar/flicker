@@ -36,5 +36,6 @@ add_subdirectory(Material)
 add_subdirectory(Light)
 add_subdirectory(Utils)
 add_subdirectory(tests)
+add_subdirectory(Texture)
 
 cotire(Flicker)

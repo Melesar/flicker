@@ -9,13 +9,15 @@ namespace Flicker
     public:
         virtual ~Material() = default;
 
-        virtual void use();
+        void use();
 
         void setModelMatrix(glm::mat4x4 model);
 
     protected:
 
         Material() = default;
+
+        virtual void setProperties();
 
     protected:
 

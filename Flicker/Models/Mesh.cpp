@@ -5,7 +5,7 @@ Flicker::Mesh::Mesh()
 
 }
 
-Flicker::Mesh::Mesh(const std::vector<Flicker::Vertex> vertices, const std::vector<int> indices)
+Flicker::Mesh::Mesh(const std::vector<Flicker::Vertex>& vertices, const std::vector<int>& indices)
 {
     setVertices(vertices);
     setIndices(indices);

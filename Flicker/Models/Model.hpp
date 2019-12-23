@@ -10,7 +10,7 @@ namespace Flicker
     class Model : public Node
     {
     public:
-        Model(const aiNode* node, const aiScene* scene, Node* parent);
+        Model(const std::vector<Mesh>& meshes, const std::vector<std::shared_ptr<Material>>& materials);
         virtual ~Model();
 
         void draw();
@@ -31,17 +31,13 @@ namespace Flicker
 
     private:
 
-        void processSingleNode(const aiNode* node, const aiScene* scene);
-        void processMesh(const aiMesh* mesh, const aiScene* scene);
-
         void createBuffers();
         void createBuffers(size_t meshIndex);
 
     private:
 
         std::vector<Mesh> m_Meshes;
-        std::vector<std::unique_ptr<Material>> m_Materials;
-        std::vector<std::unique_ptr<Model>> m_Children;
+        std::vector<std::shared_ptr<Material>> m_Materials;
 
         GLuint m_VAO;
 

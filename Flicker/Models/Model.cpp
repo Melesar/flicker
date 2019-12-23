@@ -2,20 +2,11 @@
 #include "Mesh.hpp"
 #include "Material/LitMaterial.hpp"
 
-glm::vec3 vec3 (aiVector3D vec)
+Flicker::Model::Model(const std::vector<Mesh>& meshes, const std::vector<std::shared_ptr<Material>>& materials)
 {
-    return {vec.x, vec.y, vec.z}; 
-}
+    m_Meshes = meshes;
+    m_Materials = materials;
 
-glm::vec2 vec2 (aiVector3D vec)
-{
-    return {vec.x, vec.y};
-}
-
-Flicker::Model::Model(const aiNode* node, const aiScene* scene, Node* parent)
-{
-    setParent(parent);
-    processSingleNode(node, scene);
     createBuffers();
 }
 
@@ -30,14 +21,10 @@ void Flicker::Model::draw()
 
     for(int i = 0; i < meshesCount(); ++i)
     {
-        std::unique_ptr<Material>& mat = m_Materials[i];
+        std::shared_ptr<Material> mat = m_Materials[i];
         Mesh& mesh = m_Meshes[i];
 
         mat->setModelMatrix(localToWorldMatrix());
-
-        //TODO respect child-parent relations
-        // mat->setModelMatrix(mesh.transform.localToWorldMatrix());
-
         mat->use();
 
         glDrawElements(GL_TRIANGLES, mesh.trisCount(), GL_UNSIGNED_INT, 0);
@@ -106,47 +93,4 @@ void Flicker::Model::createBuffers(size_t meshIndex)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffers.get()[meshIndex]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
-}
-
-void Flicker::Model::processSingleNode(const aiNode* node, const aiScene* scene)
-{
-    for(size_t i = 0; i < node->mNumMeshes; i++)
-    {
-        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        processMesh(mesh, scene);
-    }
-}
-
-void Flicker::Model::processMesh(const aiMesh* mesh, const aiScene* scene)
-{
-    std::vector<Flicker::Vertex> verts;
-    std::vector<int> indices;
-
-    for(size_t i = 0; i < mesh->mNumVertices; i++)
-    {
-        aiVector3D position = mesh->mVertices[i];
-        aiVector3D normal = mesh->mNormals[i];
-
-        Vertex v;
-        v.position = vec3(position);
-        v.normal = vec3(normal);
-
-        v.uv = mesh->mTextureCoords[0]
-            ? vec2(mesh->mTextureCoords[0][i])
-            : glm::vec2();
-
-        verts.push_back(v);
-    }
-
-    for(size_t i = 0; i < mesh->mNumFaces; ++i)
-    {
-        aiFace face = mesh->mFaces[i];
-        for(size_t j = 0; j < face.mNumIndices; ++j)
-        {
-            indices.push_back(face.mIndices[j]);
-        }
-    }
-
-    m_Meshes.emplace_back(verts, indices);
-    m_Materials.emplace_back(std::make_unique<LitMaterial>());
 }
