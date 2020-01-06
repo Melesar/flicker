@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PointLight.hpp"
+#include "DirectionalLight.hpp"
 
 #define UNIFORMS_PACK(index) \
             "pointLights["#index"].position",\
@@ -20,6 +21,7 @@ namespace Flicker
         void buildLightingBuffer();
 
         PointLight* addPointLight(glm::vec3 position = {0, 0, 0});
+        DirectionalLight* createDirectionalLight(glm::vec3 direction = {0, 0, 1});
 
         void setPointLightPosition(size_t lightIndex, glm::vec3 position);
         glm::vec3 getPointLightPosition(size_t lightIndex);
@@ -49,6 +51,10 @@ namespace Flicker
             }
         }
 
+        void createBuffer();
+        void setDirectionalLight();
+        void setPointLights();
+
         enum
         {
             POINT_LIGHT_POSITION,
@@ -64,6 +70,7 @@ namespace Flicker
 
     private:
 
+        std::unique_ptr<DirectionalLight> m_DirectionalLight;
         std::vector<PointLight> m_PointLights;
 
         const int BUFFER_BINDING = 1;
@@ -76,13 +83,33 @@ namespace Flicker
 
         GLint m_PointLightUniformOffsets[POINT_LIGHT_UNIFORMS_COUNT];
 
-        GLchar* m_UniformNames[POINT_LIGHT_UNIFORMS_COUNT] = 
+        GLchar* m_PointLightUniformNames[POINT_LIGHT_UNIFORMS_COUNT] = 
         {
             UNIFORMS_PACK(0)
             UNIFORMS_PACK(1)
             UNIFORMS_PACK(2)
             UNIFORMS_PACK(3)
         };
+    };
+
+    struct DirectionalLightData
+    {
+        glm::vec3 direction {0, 0, 1};
+
+        glm::vec3 ambient {0, 0, 0};
+        glm::vec3 diffuse {0, 0, 0};
+        glm::vec3 specular {0, 0, 0};
+
+        DirectionalLightData() = default;
+
+        DirectionalLightData(const DirectionalLight& light)
+        {
+            direction = light.direction;
+
+            ambient = light.ambient;
+            diffuse = light.diffuse;
+            specular = light.specular;
+        }
     };
 
     struct PointLightData
@@ -93,7 +120,7 @@ namespace Flicker
         glm::vec3 diffuse {0, 0, 0};
         glm::vec3 specular {0, 0, 0};
 
-        float constant {0};
+        float constant {1};
         float linear {0};
         float quadrant {0};
 

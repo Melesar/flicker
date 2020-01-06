@@ -20,7 +20,7 @@ Flicker::Scene::Scene()
     nanosuit->setLocalPosition({0, -8, -15});
     addNode(nanosuit.get());
 
-    m_LightingData.addPointLight({-3, 3, -12});
+    m_LightingData.createDirectionalLight({1, -1, -1});
     m_LightingData.buildLightingBuffer();
 }
 

@@ -15,6 +15,15 @@ struct Material
 
 uniform Material material;
 
+struct DirectionalLight
+{
+    vec3 direction;
+
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+};
+
 struct PointLight
 {
     vec3 position;
@@ -38,10 +47,27 @@ layout (std140, binding=0) uniform Camera
 
 layout (std140, binding=1) uniform Lights
 {
+    DirectionalLight directionalLight;
     PointLight pointLights[NUM_POINT_LIGHTS];
 };
 
 out vec4 FragColor;
+
+vec3 calcDirectionalLight(DirectionalLight light, vec3 norm, vec3 viewDir)
+{
+    // return abs(light.direction);
+    vec3 lightDir = normalize(-light.direction);
+    float diff = max(dot(lightDir, norm), 0.0);
+    vec3 reflectDir = reflect(-lightDir, norm);
+    float spec = pow(max(dot(reflectDir, viewDir), 0.0), material.shininess);
+
+    vec3 diffuseTextureSample = vec3(texture(material.diffuseTex, texCoord0));
+    vec3 lAmbient = light.ambient * diffuseTextureSample;
+    vec3 lDiffuse = light.diffuse * diff * diffuseTextureSample * vec3(material.diffuseColor);
+    vec3 lSpecular = light.specular * spec * vec3(texture(material.specularTex, texCoord0)) * vec3(material.specularColor);
+
+    return lAmbient + lDiffuse + lSpecular;
+}
 
 vec3 calcPointLight(PointLight light, vec3 norm, vec3 viewDir)
 {
@@ -67,7 +93,8 @@ void main()
     vec3 viewDir = normalize(cameraPos - FragPos);
 
     vec3 resultColor = vec3(0);
-    for(int i = 0; i < 1; i++)
+    resultColor += calcDirectionalLight(directionalLight, norm, viewDir);
+    for(int i = 0; i < NUM_POINT_LIGHTS; i++)
     {
         resultColor += calcPointLight(pointLights[i], norm, viewDir);
     }
