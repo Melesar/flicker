@@ -6,6 +6,9 @@ namespace Flicker
     {
     public:
 
+        void translateLocal(glm::vec3 offset);
+        void translateWorld(glm::vec3 offset);
+
         void setParent(Node* parent);
 
         Node& getParent();
@@ -20,6 +23,10 @@ namespace Flicker
         glm::vec3 worldRotation() const;
         glm::vec3 worldScale() const;
 
+        glm::vec3 forward() const;
+        glm::vec3 up() const;
+        glm::vec3 right() const;
+
         void setTRS(glm::mat4 trs);
 
         void setLocalPosition(glm::vec3 position);
@@ -32,7 +39,7 @@ namespace Flicker
         void setWorldRotation(glm::vec3 rotation);
         void setWorld(glm::vec3 position, glm::vec3 rotation);
 
-        glm::mat4x4 localToWorldMatrix();
+        glm::mat4x4 localToWorldMatrix() const;
 
         Node();
         virtual ~Node();
@@ -49,6 +56,9 @@ namespace Flicker
         glm::vec3 m_LocalPosition {0, 0, 0};
         glm::vec3 m_LocalRotation {0, 0, 0};
         glm::vec3 m_LocalScale {1, 1, 1};
+
+        glm::vec3 m_Forward {0, 0, -1};
+        glm::vec3 m_Up {0, 1, 0};
 
         glm::mat4x4 m_LocalToWorld {1.f};
 

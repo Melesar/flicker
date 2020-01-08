@@ -2,19 +2,30 @@
 #include "Renderer/ForwardRenderer.hpp"
 #include "Scene/Scene.hpp"
 #include "Scene/Camera.hpp"
+#include "Input.hpp"
+
+#include <chrono>
 
 void Flicker::Application::run()
 {
+    float deltaTime = 0.f;
     while(!m_ShouldClose && !glfwWindowShouldClose(m_Window))
     {
-        /* Poll for and process events */
-        glfwPollEvents();
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        Input::update();
 
-        m_Scene->update(0.1f);
+        m_Scene->update(deltaTime);
+        m_Camera->processInput(deltaTime);
 
         m_Renderer->render(m_Camera.get(), m_Scene.get());
         
+        glfwPollEvents();
         glfwSwapBuffers(m_Window);
+
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> frameDuration = end - start;
+        deltaTime = frameDuration.count();
     }
 }
 
@@ -32,6 +43,8 @@ Flicker::Application::Application()
         m_ShouldClose = true;
         return;
     }
+    
+    Input::init(m_Window);
 
     m_Camera = std::make_unique<Camera>(m_Window);
     m_Renderer = std::make_unique<ForwardRenderer>(m_Window);
