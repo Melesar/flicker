@@ -6,6 +6,7 @@ namespace Flicker
 {
     class Light;
     class Model;
+    class Skybox;
 
     class Scene
     {
@@ -14,6 +15,8 @@ namespace Flicker
         void update(float deltaTime);
 
         const std::vector<std::unique_ptr<Model>>& getModels() const;
+
+        Skybox* getSkybox() const;
 
         Scene();
         virtual ~Scene();
@@ -25,6 +28,9 @@ namespace Flicker
         void addNode(Node* node);
         void addModels(Node* parent);
 
+        void createSkybox(const std::array<std::string, 6>& faces);
+
+        std::unique_ptr<Skybox> m_Skybox;
         std::vector<std::unique_ptr<Light>> m_Lights;
         std::vector<std::unique_ptr<Model>> m_Models;
     };

@@ -1,22 +1,20 @@
 #pragma once
+#include "TextureBase.hpp"
 
 namespace Flicker
 {
-    class Texture
+    class Texture : public TextureBase
     {
     public:
 
         int width() const;
         int height() const;
 
-        GLuint id() const;
-
         Texture(int width, int height, unsigned char* data);
-        ~Texture();
+        virtual ~Texture();
 
     private:
 
         int m_Width, m_Height;
-        GLuint m_Id;
     };
 }

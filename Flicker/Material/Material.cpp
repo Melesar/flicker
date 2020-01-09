@@ -10,6 +10,11 @@ void Flicker::Material::use()
     }
 }
 
+void Flicker::Material::reset()
+{
+    
+}
+
 void Flicker::Material::setProperties()
 {
     m_Shader->setMatrix(m_ModelMatrixId, m_ModelMatrix);

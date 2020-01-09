@@ -14,6 +14,9 @@ namespace Flicker
     public:
 
         glm::mat4x4 worldToClipMatrix() const;
+        glm::mat4x4 worldToViewMatrix() const;
+        glm::mat4x4 viewToClipMatrix() const;
+        
         void processInput(float deltaTime);
 
         Camera(GLFWwindow* window);

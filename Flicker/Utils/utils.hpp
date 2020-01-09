@@ -3,12 +3,7 @@ namespace glm
     glm::mat4 rotation_matrix(glm::mat4 m, glm::vec3 rotation)
     {
         quat q = quat(rotation);
-        m = glm::toMat4(q) * m;
-        // m = glm::rotate(m, glm::radians(rotation.z), {0, 0, 1});
-        // m = glm::rotate(m, glm::radians(rotation.x), {1, 0, 0});
-        // m = glm::rotate(m, glm::radiaŃns(rotation.y), {0, 1, 0});
-
-        return m;
+        return glm::toMat4(q) * m;
     }
 
     glm::vec3 quat_to_euler(glm::quat q)

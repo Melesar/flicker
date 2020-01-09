@@ -3,11 +3,22 @@
 
 glm::mat4x4 Flicker::Camera::worldToClipMatrix() const
 {
-    glm::vec3 cameraPos = worldPosition();
-    glm::mat4x4 projMatrix = glm::perspective(glm::radians(fov), (float) m_Width / m_Height, zNear, zFar);
-    glm::mat4x4 viewMatrix = glm::lookAt(cameraPos, cameraPos + forward(), up());
+    glm::mat4x4 projMatrix = viewToClipMatrix();
+    glm::mat4x4 viewMatrix = worldToViewMatrix();
 
     return projMatrix * viewMatrix;
+}
+
+glm::mat4x4 Flicker::Camera::worldToViewMatrix() const
+{
+    glm::vec3 cameraPos = worldPosition();
+    return glm::lookAt(cameraPos, cameraPos + forward(), up());
+
+}
+
+glm::mat4x4 Flicker::Camera::viewToClipMatrix() const
+{
+    return glm::perspective(glm::radians(fov), (float) m_Width / m_Height, zNear, zFar);
 }
 
 void Flicker::Camera::processInput(float deltaTime)

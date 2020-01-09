@@ -10,15 +10,9 @@ int Flicker::Texture::height() const
     return m_Height;
 }
 
-GLuint Flicker::Texture::id() const
-{
-    return m_Id;
-}
-
 Flicker::Texture::Texture(int width, int height, unsigned char* data) 
-    : m_Width(width), m_Height(height)
+    : TextureBase(1), m_Width(width), m_Height(height) 
 {
-    glGenTextures(1, &m_Id);
     glBindTexture(GL_TEXTURE_2D, m_Id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
@@ -31,5 +25,5 @@ Flicker::Texture::Texture(int width, int height, unsigned char* data)
 
 Flicker::Texture::~Texture()
 {
-    glDeleteTextures(1, &m_Id);
+
 }

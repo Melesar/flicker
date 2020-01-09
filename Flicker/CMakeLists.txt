@@ -37,5 +37,6 @@ add_subdirectory(Light)
 add_subdirectory(Utils)
 add_subdirectory(tests)
 add_subdirectory(Texture)
+add_subdirectory(Effects)
 
 cotire(Flicker)

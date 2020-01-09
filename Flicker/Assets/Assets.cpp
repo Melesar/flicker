@@ -1,6 +1,7 @@
 #include "Assets.hpp"
 #include "Shader/Shader.hpp"
 #include "Texture/Texture.hpp"
+#include "Texture/Cubemap.hpp"
 #include "Scene/Node.hpp"
 #include "Models/model_import.hpp"
 
@@ -93,6 +94,30 @@ std::shared_ptr<Flicker::Texture> Flicker::Assets::loadTextureByPath(std::string
     stbi_image_free(textureData);
 
     return texture;
+}
+
+std::shared_ptr<Flicker::Cubemap> Flicker::Assets::loadSkybox(std::string folder, const std::array<std::string, SKYBOX_FACES>& faces)
+{
+    std::vector<ImageData> facesData;
+    for(int i = 0; i < faces.size(); i++)
+    {
+        std::string subfolder = "textures/" + folder;
+        std::string pathToFace = getPathToAsset(faces[i], subfolder);
+        int width, height, channels;
+        unsigned char* data = stbi_load(pathToFace.c_str(), &width, &height, &channels, 0);
+        assert(data != nullptr);
+        facesData.emplace_back(width, height, data);
+    }
+
+    std::shared_ptr<Cubemap> skybox = std::make_shared<Cubemap>(facesData);
+
+    for(int i = 0; i < SKYBOX_FACES; i++)
+    {
+        ImageData imageData = facesData[i];
+        stbi_image_free(imageData.data);
+    }
+
+    return skybox;
 }
 
 std::string Flicker::Assets::getFileContents(std::string filePath)

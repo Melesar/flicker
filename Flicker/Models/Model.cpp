@@ -28,6 +28,8 @@ void Flicker::Model::draw()
         mat->use();
 
         glDrawElements(GL_TRIANGLES, mesh.trisCount(), GL_UNSIGNED_INT, 0);
+
+        mat->reset();
     }
 
     glBindVertexArray(0);

@@ -1,1 +1,1 @@
-target_sources(Flicker PUBLIC Texture.hpp Texture.cpp)
+target_sources(Flicker PUBLIC Texture.hpp TextureBase.cpp Texture.cpp Cubemap.cpp)

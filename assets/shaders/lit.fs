@@ -55,7 +55,6 @@ out vec4 FragColor;
 
 vec3 calcDirectionalLight(DirectionalLight light, vec3 norm, vec3 viewDir)
 {
-    // return abs(light.direction);
     vec3 lightDir = normalize(-light.direction);
     float diff = max(dot(lightDir, norm), 0.0);
     vec3 reflectDir = reflect(-lightDir, norm);

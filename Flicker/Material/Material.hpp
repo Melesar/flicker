@@ -10,6 +10,7 @@ namespace Flicker
         virtual ~Material() = default;
 
         void use();
+        virtual void reset();
 
         void setModelMatrix(glm::mat4x4 model);
 

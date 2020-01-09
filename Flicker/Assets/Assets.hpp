@@ -7,16 +7,25 @@ namespace Flicker
     class Model;
     class Node;
     class Texture;
+    class Cubemap;
 
     class Assets
     {
+    private:
+    
+        const static int SKYBOX_FACES = 6;
+
     public:
 
-        static std::shared_ptr<Shader> loadShader(std::string name); 
+        static std::shared_ptr<Shader> loadShader(std::string name);
+
         static std::shared_ptr<Node> loadModel(std::string name);
+
         static std::shared_ptr<Texture> loadTexture(std::string name);
         static std::shared_ptr<Texture> loadTexture(std::string folder, std::string name);
         static std::shared_ptr<Texture> loadTextureByPath(std::string path);
+
+        static std::shared_ptr<Cubemap> loadSkybox(std::string folder, const std::array<std::string, SKYBOX_FACES>& faces);
 
         static std::string getFileContents(std::string fileName);
 
@@ -36,6 +45,7 @@ namespace Flicker
 
             return false;
         }
+
 
     private:
         Assets();
