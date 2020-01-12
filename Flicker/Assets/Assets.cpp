@@ -106,12 +106,12 @@ std::shared_ptr<Flicker::Cubemap> Flicker::Assets::loadSkybox(std::string folder
         int width, height, channels;
         unsigned char* data = stbi_load(pathToFace.c_str(), &width, &height, &channels, 0);
         assert(data != nullptr);
-        facesData.emplace_back(width, height, data);
+        facesData.emplace_back(width, height, channels, data);
     }
 
     std::shared_ptr<Cubemap> skybox = std::make_shared<Cubemap>(facesData);
 
-    for(int i = 0; i < SKYBOX_FACES; i++)
+    for(int i = 0; i < faces.size(); i++)
     {
         ImageData imageData = facesData[i];
         stbi_image_free(imageData.data);

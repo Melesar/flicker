@@ -30,9 +30,8 @@ Flicker::Scene::Scene()
     m_LightingData.createDirectionalLight({1, -1, -1});
     m_LightingData.buildLightingBuffer();
 
-    // std::string faces [6] = {"glacier_rt.tga", "glacier_lf.tga", "glacier_up.tga", "glacier_dn.tga", "glacier_bk.tga", "glacier_ft.tga"};
-
-    std::array<std::string, 6> faces = {"glacier_rt.tga", "glacier_lf.tga", "glacier_up.tga", "glacier_dn.tga", "glacier_bk.tga", "glacier_ft.tga"};
+    // std::array<std::string, 6> faces = {"glacier_rt.png", "glacier_lf.png", "glacier_up.png", "glacier_dn.png", "glacier_bk.png", "glacier_ft.png"};
+    std::array<std::string, 6> faces = {"right.jpg", "left.jpg", "top.jpg", "bottom.jpg", "front.jpg", "back.jpg"};
 
     createSkybox(faces);
 }

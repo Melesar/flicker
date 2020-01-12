@@ -9,7 +9,7 @@ namespace Flicker
     {
     public:
 
-        SkyboxMaterial(const Cubemap* cubemap);
+        SkyboxMaterial(const std::shared_ptr<Cubemap>& cubemap);
 
         void setViewProjection(const glm::mat4x4& view, const glm::mat4x4& projection);
         void setProperties() override;
@@ -19,6 +19,6 @@ namespace Flicker
 
         glm::mat4x4 m_View, m_Projection;
         GLint m_ViewId, m_ProjectionId;
-        const Cubemap* m_Cubemap;
+        std::shared_ptr<Cubemap> m_Cubemap;
     };
 }

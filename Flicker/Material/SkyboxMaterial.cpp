@@ -3,7 +3,7 @@
 #include "Assets/Assets.hpp"
 #include "Shader/Shader.hpp"
 
-Flicker::SkyboxMaterial::SkyboxMaterial(const Cubemap* cubemap) : m_Cubemap(cubemap)
+Flicker::SkyboxMaterial::SkyboxMaterial(const std::shared_ptr<Cubemap>& cubemap) : m_Cubemap(cubemap)
 {
     m_Shader = Assets::loadShader("skybox");
     m_ViewId = m_Shader->getUniformId("view");
@@ -18,13 +18,15 @@ void Flicker::SkyboxMaterial::setViewProjection(const glm::mat4x4& view, const g
 
 void Flicker::SkyboxMaterial::setProperties()
 {
-    glBindTexture(GL_TEXTURE_CUBE_MAP, m_Cubemap->id());
     m_Shader->setMatrix(m_ViewId, m_View);
     m_Shader->setMatrix(m_ProjectionId, m_Projection);
-    glDepthMask(GL_FALSE);
+
+    glDepthFunc(GL_LEQUAL);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_Cubemap->id());
 }
 
 void Flicker::SkyboxMaterial::reset()
 {
-    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LESS);
 } 

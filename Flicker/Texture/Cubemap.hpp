@@ -5,11 +5,11 @@ namespace Flicker
 {
     struct ImageData
     {
-        int width, height;
+        int width, height, numComponents;
         unsigned char* data;
 
-        ImageData(int width, int height, unsigned char* data)
-            : width(width), height(height), data(data) {}
+        ImageData(int width, int height, int numComponents, unsigned char* data)
+            : width(width), height(height), numComponents(numComponents), data(data) {}
     };
     
 
