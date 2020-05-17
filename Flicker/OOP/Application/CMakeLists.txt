@@ -1,0 +1,1 @@
+target_sources(Flicker PUBLIC Application.hpp Application.cpp Input.cpp)

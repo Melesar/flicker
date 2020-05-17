@@ -20,6 +20,7 @@
 #include <vector>
 #include <array>
 #include <string>
+#include <algorithm>
 
 const int NUM_POINT_LIGHTS = 4;
 const float POINT_LIGHT_CONSTANT_ATTENUATION = 1.0f;

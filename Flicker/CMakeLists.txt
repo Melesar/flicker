@@ -27,16 +27,5 @@ add_custom_command(TARGET Flicker POST_BUILD
         ${ASSETS_PATH} ${ASSETS_OUTPUT_PATH})
 
 add_subdirectory(Application)
-add_subdirectory(Renderer)
-add_subdirectory(Shader)
-add_subdirectory(Assets)
-add_subdirectory(Models)
-add_subdirectory(Scene)
-add_subdirectory(Material)
-add_subdirectory(Light)
-add_subdirectory(Utils)
-add_subdirectory(tests)
-add_subdirectory(Texture)
-add_subdirectory(Effects)
 
 cotire(Flicker)

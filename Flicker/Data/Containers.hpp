@@ -1,0 +1,56 @@
+namespace Flicker
+{
+    // class Material;
+    // class Shader;
+
+    template<int SIZE>
+    struct DataContainer
+    {
+        template<typename T>
+        using DataArray = std::array<T, SIZE>;
+
+        uint16_t Count;
+        DataArray<uint16_t> Generations;
+    };
+
+    struct Scene : public DataContainer<512>
+    {
+        DataArray<uint16_t> Parents;
+        DataArray<glm::mat4> Local;
+        DataArray<glm::mat4> Global;
+    };
+
+    struct RenderingWorld : public DataContainer<512>
+    {
+        DataArray<GLuint> VertexBuffers;
+        DataArray<GLuint> IndexBuffers;
+        // DataArray<Material> Materials;
+        DataArray<uint32_t> TrisCounts;
+    };
+
+    struct ShaderStorage : public DataContainer<4>
+    {
+        // DataArray<Shader> Shaders;
+    };
+
+    template<int SIZE>
+    void clear (DataContainer<SIZE>& container)
+    {
+        container.Count = 0;
+        memset(&container.Generations, 0, SIZE);
+    }
+
+    template<typename T>
+    T* create_container()
+    {
+        T* container = new T();
+        clear(*container);
+        return container;
+    }
+
+    template<typename T>
+    void free_container(T* container)
+    {
+        delete container;
+    }
+}
