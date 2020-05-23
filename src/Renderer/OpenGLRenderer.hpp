@@ -1,3 +1,6 @@
+#pragma once
+#include <Data/Data.hpp>
+
 namespace Flicker
 {
     struct WindowHandle;
@@ -11,11 +14,17 @@ namespace Flicker
         ~OpenGLRenderer();
 
         void render();
+    
+    private:
+
+        void loadShaders();
 
     private:
 
         const WindowHandle& m_WindowHandle;
         RenderingWorld& m_RenderingWorld;
         SceneHierarchy& m_Scene;    
+        
+        Shader m_LitShader;
     };
 }

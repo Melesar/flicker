@@ -1,6 +1,7 @@
 #include "OpenGLRenderer.hpp"
 #include <Data/Containers.hpp>
-#include <Data/Components.hpp>
+#include <OpenGL/OpenGl.hpp>
+#include <Assets/Assets.hpp>
 #include "pch.hpp"
 
 Flicker::OpenGLRenderer::OpenGLRenderer(const WindowHandle& windowHandle, Flicker::RenderingWorld& renderingWorld, Flicker::SceneHierarchy& scene)
@@ -8,10 +9,18 @@ Flicker::OpenGLRenderer::OpenGLRenderer(const WindowHandle& windowHandle, Flicke
 {
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glViewport(0, 0, m_WindowHandle.Width, m_WindowHandle.Height);
+
+    loadShaders();
 }
 
 Flicker::OpenGLRenderer::~OpenGLRenderer()
 { }
+
+void Flicker::OpenGLRenderer::loadShaders()
+{
+    ShaderSources litShaderSources = Flicker::load_shader("lit");
+    m_LitShader = Flicker::OpenGL::load_shader(litShaderSources);
+}
 
 void Flicker::OpenGLRenderer::render()
 {

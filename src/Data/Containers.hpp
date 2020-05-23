@@ -1,12 +1,12 @@
 #pragma once
 
 #include "Components.hpp"
+#include "Data.hpp"
 
 namespace Flicker
 {
     // class Material;
-    // class Shader;
-    struct ModelEntity;
+    struct Shader;
 
     template<int SIZE>
     struct DataContainer
@@ -35,7 +35,7 @@ namespace Flicker
 
     struct ShadersStorage : public DataContainer<4>
     {
-        // DataArray<Shader> Shaders;
+        DataArray<Shader> Shaders;
     };
 
     struct ModelsStorage : public DataContainer<8>
@@ -49,6 +49,8 @@ namespace Flicker
         container.Count = 0;
         memset(&container.Generations, 0, SIZE);
     }
+
+    ShaderHandle add_shader(ShadersStorage& container, Shader shader);
 
     template<typename T>
     T* create_container()

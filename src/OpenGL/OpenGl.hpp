@@ -8,5 +8,6 @@ namespace Flicker
     {
         Shader load_shader(const ShaderSources& sources);
         void use_shader(const Shader& shader);
+        void delete_shader(const Shader& shader);
     }
 }

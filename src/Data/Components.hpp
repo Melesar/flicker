@@ -10,6 +10,7 @@ namespace Flicker
 
     struct TransformHandle : public Handle { };
     struct MeshHandle : public Handle { };
+    struct ShaderHandle : public Handle { };
 
     struct ModelComponent
     {
