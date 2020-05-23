@@ -1,1 +1,0 @@
-target_sources(Flicker PUBLIC Assets.hpp Assets.cpp)

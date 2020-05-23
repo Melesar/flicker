@@ -1,1 +1,0 @@
-target_sources(Flicker PUBLIC Mesh.hpp Mesh.cpp Model.hpp Model.cpp model_import.hpp model_import.cpp)

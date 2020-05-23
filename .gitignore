@@ -1,5 +1,10 @@
 build/
+bin/
+
 .vscode/
 .idea/
 
+src_oop/
+
 *.pdb
+.DS_Store
