@@ -7,7 +7,8 @@ namespace Flicker
     {
     public:
         Application();
-        
+        ~Application();
+
         void run();
 
     private:

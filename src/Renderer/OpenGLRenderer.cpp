@@ -10,6 +10,9 @@ Flicker::OpenGLRenderer::OpenGLRenderer(const WindowHandle& windowHandle, Flicke
     glViewport(0, 0, m_WindowHandle.Width, m_WindowHandle.Height);
 }
 
+Flicker::OpenGLRenderer::~OpenGLRenderer()
+{ }
+
 void Flicker::OpenGLRenderer::render()
 {
     glClearColor(0.5f, 0.2f, 0.8f, 1.f);

@@ -8,6 +8,7 @@ namespace Flicker
     {
     public:
         OpenGLRenderer(const WindowHandle& windowHandle, RenderingWorld& renderingWorld, Scene& scene);
+        ~OpenGLRenderer();
 
         void render();
 

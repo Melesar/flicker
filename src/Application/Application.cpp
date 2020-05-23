@@ -26,6 +26,11 @@ Flicker::Application::Application()
     m_IsRunning = true;
 }
 
+Flicker::Application::~Application()
+{
+    glfwTerminate();
+}
+
 void Flicker::Application::run()
 {
     std::unique_ptr<RenderingWorld> renderingWorld = std::make_unique<RenderingWorld>();
