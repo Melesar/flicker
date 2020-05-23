@@ -7,4 +7,11 @@ namespace Flicker
         std::string VertexShaderSource;
         std::string FragmentShaderSource;
     };
+
+    struct Shader
+    {
+        GLuint ProgramId;
+        GLuint VertexShader;
+        GLuint FragmentShader;
+    };
 }
