@@ -7,3 +7,4 @@ bin/
 src_oop/
 
 *.pdb
+.DS_Store
