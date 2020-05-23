@@ -4,4 +4,6 @@ bin/
 .vscode/
 .idea/
 
+src_oop/
+
 *.pdb

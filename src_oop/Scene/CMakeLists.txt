@@ -1,1 +1,0 @@
-target_sources(Flicker PUBLIC Camera.hpp Node.hpp Camera.cpp Node.cpp Scene.hpp Scene.cpp)
