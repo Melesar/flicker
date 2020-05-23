@@ -20,7 +20,7 @@ namespace Flicker
         DataArray<glm::mat4> Global;
     };
 
-    struct RenderingWorld : public DataContainer<512>
+    struct MeshesStorage : public DataContainer<512>
     {
         DataArray<GLuint> VertexBuffers;
         DataArray<GLuint> IndexBuffers;
@@ -28,7 +28,7 @@ namespace Flicker
         DataArray<uint32_t> TrisCounts;
     };
 
-    struct ShaderStorage : public DataContainer<4>
+    struct ShadersStorage : public DataContainer<4>
     {
         // DataArray<Shader> Shaders;
     };
@@ -53,4 +53,16 @@ namespace Flicker
     {
         delete container;
     }
+
+    struct RenderingWorld
+    {
+        MeshesStorage MeshesStorage;
+        ShadersStorage ShadersStorage;
+
+        RenderingWorld()
+        {
+            clear(MeshesStorage);
+            clear(ShadersStorage);
+        }
+    };
 }

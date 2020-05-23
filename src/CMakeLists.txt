@@ -23,5 +23,6 @@ add_custom_command(TARGET Flicker POST_BUILD
         ${ASSETS_PATH} ${ASSETS_OUTPUT_PATH})
 
 add_subdirectory(Application)
+add_subdirectory(Renderer)
 
 cotire(Flicker)
