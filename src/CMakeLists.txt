@@ -3,10 +3,11 @@ add_executable(Flicker main.cpp glad.c pch.cpp)
 target_include_directories(Flicker PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(Flicker PUBLIC ${VENDOR_DIR}/assimp/include)
 target_include_directories(Flicker PUBLIC ${VENDOR_DIR}/glfw/include)
+target_include_directories(Flicker PUBLIC ${VENDOR_DIR}/ecs/include)
 target_include_directories(Flicker PUBLIC ${PROJECT_BINARY_DIR}/vendor/assimp/include)
 target_include_directories(Flicker PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(Flicker PUBLIC assimp glfw)
+target_link_libraries(Flicker PUBLIC assimp glfw ecs)
 
 set_target_properties(Flicker PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "pch.hpp")
 
