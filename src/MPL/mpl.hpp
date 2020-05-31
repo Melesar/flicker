@@ -66,5 +66,22 @@ namespace Flicker
 
         template<typename T, typename TOther, typename... Ts>
         struct Contains<T, TypeList<TOther, Ts...>> : std::bool_constant<Contains<T, TypeList<Ts...>>::value> {};
+
+        template<size_t I, typename TFunc, typename... Ts>
+        void for_tuple_impl(Tuple<Ts...> tuple, TFunc&& func, std::bool_constant<true>)
+        {
+            func(std::get<I>(tuple));
+            for_tuple_impl<I + 1>(tuple, func, std::bool_constant<(I + 1 < TypeList<Ts...>::size)>{});
+        }
+
+        template<size_t I, typename TFunc, typename... Ts>
+        void for_tuple_impl(Tuple<Ts...> tuple, TFunc&& func, std::bool_constant<false>)
+        { }
+
+        template<typename TFunc, typename... Ts>
+        void for_tuple(Tuple<Ts...> tuple, TFunc func)
+        {
+            for_tuple_impl<0>(tuple, func, std::bool_constant<(0 < TypeList<Ts...>::size)> {});
+        }
     }
 }
