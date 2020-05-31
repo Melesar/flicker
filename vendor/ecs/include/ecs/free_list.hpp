@@ -2,6 +2,8 @@
 
 namespace ecs
 {
+    //A free-list pool allocator described here:
+    //https://blog.molecular-matters.com/2012/09/17/memory-allocation-strategies-a-pool-allocator/
     class FreeList
     {
     public:

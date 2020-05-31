@@ -2,7 +2,8 @@
 
 ecs::FreeList::FreeList(void *buffer, size_t numElements, size_t elementSize)
 {
-    union {
+    union
+    {
         void *asVoid;
         char *asChar;
         FreeList *asSelf;

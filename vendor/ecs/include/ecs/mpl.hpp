@@ -93,4 +93,10 @@ namespace mpl
     {
         for_tuple_impl<0>(tuple, func, std::bool_constant<(0 < TypeList<Ts...>::size)>{});
     }
+
+    template<typename TList, typename TFunc>
+    void for_types(TFunc&& func)
+    {
+        for_tuple(Rename<Tuple, TList>{}, func);
+    }
 }

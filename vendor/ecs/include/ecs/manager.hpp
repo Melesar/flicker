@@ -134,6 +134,27 @@ namespace ecs
             m_isDirty = false;
         }
 
+        template<typename TFunc>
+        void forEntities(TFunc&& func)
+        {
+            for (size_t i = 0; i < m_CurrentEntityIndex; i++)
+            {
+                func(m_ArrayToLookup[i]);
+            }
+        }
+
+        template<typename TFunc>
+        void forEntities(Bitset signature, TFunc&& func)
+        {
+            for (size_t i = 0; i < m_CurrentEntityIndex; i++)
+            {
+                if ((signature & m_Bitsets[i]) == signature)
+                {
+                    func(m_ArrayToLookup[i]);
+                }
+            }
+        }
+
     private:
 
         template<typename T>
@@ -203,6 +224,7 @@ namespace ecs
                 std::swap(m_Entities[aliveIndex], m_Entities[deadIndex]);
                 std::swap(m_Generations[aliveIndex], m_Generations[deadIndex]);
                 std::swap(m_Bitsets[aliveIndex], m_Bitsets[deadIndex]);
+                std::swap(m_ArrayToLookup[aliveIndex], m_ArrayToLookup[deadIndex]);
 
                 mpl::for_tuple(m_ComponentsStorage, [deadIndex, aliveIndex](auto& components)
                 {
