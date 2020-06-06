@@ -1,8 +1,10 @@
 #include "pch.hpp"
 #include "Application.hpp"
-#include "Data/Containers.hpp"
-#include "Data/Components.hpp"
-#include "Renderer/OpenGLRenderer.hpp"
+#include "ECS/TranformationSystem.hpp"
+#include "ECS/MeshRenderingSystem.hpp"
+#include "Assets/Assets.hpp"
+#include "Assets/AssetsStorage.hpp"
+#include "OpenGL/OpenGl.hpp"
 
 Flicker::Application::Application()
 {
@@ -37,21 +39,19 @@ Flicker::Application::~Application()
 
 void Flicker::Application::run()
 {
-    std::unique_ptr<RenderingWorld> renderingWorld = std::make_unique<RenderingWorld>();
-    Flicker::SceneHierarchy* scene = Flicker::create_container<SceneHierarchy>();
-    
-    int width, height;
-    glfwGetWindowSize(m_WindowHandle, &width, &height);
-    WindowHandle handle {static_cast<uint16_t>(width), static_cast<uint16_t>(height)};
-    Flicker::OpenGLRenderer renderer(handle, *renderingWorld, *scene);
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+    EntityManager entityManager;
+    AssetsStorage assetsStorage;
+    assetsStorage.addShader("lit");
+    SystemQueue systemsQueue(entityManager);
+
+    Flicker::load_model("teapot.fbx", entityManager, assetsStorage);
 
     while (m_IsRunning && !glfwWindowShouldClose(m_WindowHandle))
     {
-        renderer.render();
-        
+        systemsQueue.update(0.33f);
         glfwPollEvents();
         glfwSwapBuffers(m_WindowHandle);
     }
-
-    Flicker::free_container(scene);
 }

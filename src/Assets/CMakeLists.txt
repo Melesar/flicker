@@ -1,1 +1,1 @@
-target_sources(Flicker PUBLIC Assets.cpp)
+target_sources(Flicker PUBLIC Assets.cpp AssetsStorage.cpp assimp_parse.cpp)

@@ -1,5 +1,6 @@
+#include <Assets/AssetsStorage.hpp>
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace Flicker 
 {
@@ -13,7 +14,10 @@ namespace Flicker
         void run();
 
     private:
+
+    private:
         bool m_IsRunning;
         GLFWwindow* m_WindowHandle;
+        AssetsStorage m_AssetsStorage;
     };
 }

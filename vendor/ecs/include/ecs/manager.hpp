@@ -155,6 +155,23 @@ namespace ecs
             }
         }
 
+        EntityManager(const EntityManager& manger) = delete;
+        EntityManager(EntityManager&& manager) :
+            m_CurrentEntityIndex(manager.m_CurrentEntityIndex),
+            m_NextEntityIndex(manager.m_NextEntityIndex),
+            m_Capacity(manager.m_Capacity),
+            m_isDirty(manager.m_isDirty),
+            m_LookupMemory(manager.m_LookupMemory),
+            m_Lookup(std::move(manager.m_Lookup)),
+            m_Entities(std::move(manager.m_Entities)),
+            m_Generations(std::move(manager.m_Generations)),
+            m_Bitsets(std::move(manager.m_Bitsets)),
+            m_ArrayToLookup(std::move(manager.m_ArrayToLookup)),
+            m_ComponentsStorage(std::move(manager.m_ComponentsStorage))
+        {
+            manager.m_LookupMemory = nullptr;
+        }
+
     private:
 
         template<typename T>

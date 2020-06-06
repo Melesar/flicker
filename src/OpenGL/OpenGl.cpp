@@ -1,18 +1,18 @@
 #include "pch.hpp"
 #include "OpenGl.hpp"
 
-GLuint create_shader(GLenum shaderType, const std::string& source);
+GLuint gl_create_shader(GLenum shaderType, const std::string& source);
 
 bool check_program_for_errors(GLuint program, GLint flag, char* errorMessage);
 bool check_shader_for_errors(GLuint shader, GLint flag, char* errorMessage);
 
-Flicker::Shader Flicker::OpenGL::load_shader(const ShaderSources& sources)
+Flicker::Shader Flicker::OpenGL::create_shader(const ShaderSources& sources)
 {
     Shader shader;
     shader.ProgramId = glCreateProgram();
     
-    shader.VertexShader = create_shader(GL_VERTEX_SHADER, sources.VertexShaderSource);
-    shader.FragmentShader = create_shader(GL_FRAGMENT_SHADER, sources.FragmentShaderSource);
+    shader.VertexShader = gl_create_shader(GL_VERTEX_SHADER, sources.VertexShaderSource);
+    shader.FragmentShader = gl_create_shader(GL_FRAGMENT_SHADER, sources.FragmentShaderSource);
 
     glAttachShader(shader.ProgramId, shader.VertexShader);
     glAttachShader(shader.ProgramId, shader.FragmentShader);
@@ -24,6 +24,8 @@ Flicker::Shader Flicker::OpenGL::load_shader(const ShaderSources& sources)
     glValidateProgram(shader.ProgramId);
 
     assert(check_program_for_errors(shader.ProgramId, GL_VALIDATE_STATUS, "Program is invalid: "));
+
+    return shader;
 }
 
 void Flicker::OpenGL::use_shader(const Shader& shader)
@@ -42,7 +44,7 @@ void Flicker::OpenGL::delete_shader(const Shader& shader)
     glDeleteProgram(shader.ProgramId);
 }
 
-GLuint create_shader(GLenum shaderType, const std::string& source)
+GLuint gl_create_shader(GLenum shaderType, const std::string& source)
 {
     GLuint shader = glCreateShader(shaderType);
 
@@ -92,4 +94,34 @@ bool check_shader_for_errors(GLuint shader, GLint flag, char* errorMessage)
 
     std::cerr << errorMessage << error << std::endl;
     return false;
+}
+
+Flicker::Mesh Flicker::OpenGL::createMesh(const std::vector<Flicker::Vertex> vertices, const std::vector<size_t> indices)
+{
+    Flicker::Mesh mesh;
+    mesh.NumIndices = indices.size();
+    glGenBuffers(1, &mesh.VertexBuffer);
+    glGenBuffers(1, &mesh.IndexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, mesh.VertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Flicker::Vertex), vertices.data(), GL_STATIC_DRAW);
+
+    int stride = 8 * sizeof(float);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, 0);
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(3 * sizeof(float)));
+
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.IndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
+
+    return mesh;
+}
+
+GLint Flicker::OpenGL::get_shader_property_id(const Flicker::Shader& shader, const char* propertyName)
+{
+    return glGetUniformLocation(shader.ProgramId, propertyName);
 }

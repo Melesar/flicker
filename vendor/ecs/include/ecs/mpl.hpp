@@ -76,6 +76,9 @@ namespace mpl
     {
     };
 
+    template<typename... Ts>
+    using TupleOfVectors = std::tuple<std::vector<Ts>...>;
+
     template <size_t I, typename TFunc, typename... Ts>
     void for_tuple_impl(Tuple<Ts...>& tuple, TFunc &&func, std::bool_constant<true>)
     {

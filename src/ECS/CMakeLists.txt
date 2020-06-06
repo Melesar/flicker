@@ -1,0 +1,1 @@
+target_sources(Flicker PUBLIC TransformationSystem.cpp MeshRenderingSystem.cpp)

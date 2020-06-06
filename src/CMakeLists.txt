@@ -23,10 +23,9 @@ add_custom_command(TARGET Flicker POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${ASSETS_PATH} ${ASSETS_OUTPUT_PATH})
 
+add_subdirectory(ECS)
 add_subdirectory(Application)
 add_subdirectory(Assets)
-add_subdirectory(Renderer)
 add_subdirectory(OpenGL)
-add_subdirectory(Data)
 
 cotire(Flicker)
